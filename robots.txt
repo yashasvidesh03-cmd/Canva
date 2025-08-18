@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://yashasvidesh03-cmd.github.io/New-website/sitemap.xml
