@@ -1,1 +1,544 @@
-<
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The 90's Club – Fine Dining Experience</title>
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="The 90's Club – Fine dining experience with 3D dish previews and AR menus." />
+  <meta name="keywords" content="fine dining, 3D menu, AR restaurant, The 90's Club, gourmet food, interactive menu" />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://yashasvidesh03-cmd.github.io/New-website/" />
+  <meta property="og:title" content="The 90's Club – Fine Dining Experience" />
+  <meta property="og:description" content="Explore our curated menu with immersive 3D and AR previews." />
+  <meta property="og:url" content="https://yashasvidesh03-cmd.github.io/New-website/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://yashasvidesh03-cmd.github.io/New-website/image.jpg.jpeg" />
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://yashasvidesh03-cmd.github.io/New-website/image.jpg.jpeg">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: "Inter", sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .logo-bar {
+      position: fixed;
+      top: 40px;
+      right: 60px;
+      transform: none;
+      z-index: 1100;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      transition:
+        right 1s cubic-bezier(0.77,0,0.18,1),
+        top 1s cubic-bezier(0.77,0,0.18,1),
+        transform 1s cubic-bezier(0.77,0,0.18,1);
+    }
+    .logo-bar.moved-right {
+      right: 60px;
+      top: 40px;
+      transform: none;
+      align-items: flex-end;
+    }
+    .logo-main {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #d4af37 0%, #f4e4a6 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 30px rgba(212,175,55,0.2);
+      border: 1px solid rgba(212,175,55,0.3);
+      overflow: hidden;
+    }
+    .logo-main img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      background: #000;
+    }
+    .main-title {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.4rem;
+      font-weight: 300;
+      color: #fff;
+      letter-spacing: 3px;
+      margin-bottom: 4px;
+      text-align: right;
+    }
+    .subtitle {
+      font-size: 0.85rem;
+      color: #d4af37;
+      opacity: 0.9;
+      font-weight: 300;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-left: 0;
+      text-align: right;
+    }
+    .menu-full {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+      overflow-y: auto;
+      padding-left: 200px;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.7s cubic-bezier(.5,.02,.45,.83);
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+    .menu-full.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 40px 120px 40px;
+      width: 100%;
+    }
+    .section-header { text-align: center; margin-bottom: 80px; }
+    .section-title {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 3rem;
+      font-weight: 300;
+      color: #fff;
+      margin-bottom: 20px;
+      position: relative;
+      letter-spacing: 2px;
+    }
+    .section-title::after {
+      content: "";
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 1px;
+      background: #d4af37;
+    }
+    .section-subtitle {
+      font-size: 0.9rem;
+      color: #888888;
+      font-weight: 300;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .category-tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 80px;
+      gap: 0;
+      border-bottom: 1px solid rgba(212,175,55,0.2);
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: #888888;
+      padding: 20px 40px;
+      font-family: "Inter", sans-serif;
+      font-size: 0.9rem;
+      font-weight: 400;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      position: relative;
+    }
+    .tab-btn::after {
+      content: "";
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #d4af37;
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    .tab-btn:hover, .tab-btn.active { color: #fff; }
+    .tab-btn.active::after { transform: scaleX(1); }
+    .menu-category { display: none; }
+    .menu-category.active { display: block; animation: fadeIn 0.6s ease-out; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .menu-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: 0;
+    }
+    .menu-card {
+      background: transparent;
+      padding: 40px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .menu-card:hover {
+      background: rgba(212,175,55,0.02);
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    .card-content { display: flex; justify-content: space-between; align-items: flex-start; gap: 30px; }
+    .dish-info { flex: 1; }
+    .dish-header {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: 12px; gap: 20px;
+    }
+    .dish-name {
+      font-family: "Cormorant Garamond", serif; font-size: 1.4rem; font-weight: 500;
+      color: #fff; letter-spacing: 1px;
+    }
+    .dish-price {
+      font-family: "Inter", sans-serif; font-size: 1.1rem; font-weight: 400;
+      color: #d4af37; white-space: nowrap;
+    }
+    .dish-description {
+      color: #aaaaaa; font-size: 0.9rem; line-height: 1.6;
+      margin-bottom: 20px; font-weight: 300;
+    }
+    .card-actions { display: flex; align-items: center; gap: 20px; }
+    .view-3d-btn {
+      background: transparent;
+      border: 1px solid rgba(212,175,55,0.4);
+      border-radius: 0;
+      padding: 8px 20px;
+      color: #d4af37;
+      font-family: "Inter", sans-serif;
+      font-size: 0.8rem;
+      font-weight: 400;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .view-3d-btn[disabled] { opacity: 0.4; cursor: not-allowed; border-style: dashed;}
+    .view-3d-btn:hover {
+      background: rgba(212,175,55,0.1);
+      border-color: #d4af37;
+      color: #fff;
+    }
+    .popularity-badge {
+      background: transparent; color: #d4af37; padding: 4px 0;
+      font-size: 0.7rem; font-weight: 400; text-transform: uppercase;
+      letter-spacing: 1px; border-bottom: 1px solid rgba(212,175,55,0.3);
+    }
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.95); z-index: 2000; display: none;
+      align-items: center; justify-content: center; backdrop-filter: blur(10px);
+    }
+    .modal-overlay.active {
+      display: flex; animation: fadeIn 0.3s ease-out;
+    }
+    .modal-content {
+      background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+      border: 1px solid rgba(212,175,55,0.2);
+      padding: 40px; max-width: 90vw; max-height: 90vh;
+      width: 800px; height: 600px; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+      display: flex; flex-direction: column;
+    }
+    .modal-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 30px; padding-bottom: 20px;
+      border-bottom: 1px solid rgba(212,175,55,0.2);
+    }
+    .modal-title {
+      font-family: "Cormorant Garamond", serif; font-size: 1.6rem;
+      color: #fff; margin: 0; font-weight: 400;
+    }
+    .close-btn {
+      background: transparent; border: 1px solid rgba(212,175,55,0.4); color: #d4af37;
+      font-size: 1.2rem; cursor: pointer; padding: 8px 12px; width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;
+      font-weight: 300;
+    }
+    .close-btn:hover { background: rgba(212,175,55,0.1); border-color: #d4af37; color: #fff; }
+    .viewer-container {
+      width: 100%; height: calc(100% - 100px);
+      background: linear-gradient(45deg, #0a0a0a, #1a1a1a);
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid rgba(212,175,55,0.1); position: relative; overflow: hidden;
+      flex: 1;
+    }
+    .ar-btn {
+      background: rgba(212,175,55,0.1);
+      color: #d4af37;
+      border: 1px solid #d4af37;
+      padding: 12px 24px;
+      font-size: 1em;
+      cursor: pointer;
+      border-radius: 8px;
+      position: absolute;
+      bottom: 30px;
+      right: 30px;
+      transition: all 0.3s ease;
+      z-index: 10;
+      display: none;
+    }
+    .ar-btn:hover { background: #d4af37; color: #0a0a0a; }
+
+    @media (max-width: 768px) {
+      .main-title { font-size: 1.4rem; }
+      .logo-bar { top: 12px; right: 15px; }
+      .logo-bar.moved-right { right: 15px; top: 8px; }
+      .logo-main { width: 50px; height: 50px; margin-bottom: 6px; }
+      .logo-main img { width: 40px; height: 40px; }
+      .menu-full { padding-left: 0; }
+      .container { padding: 10px 4vw 80px 4vw; }
+      .section-header, .section-title { margin-bottom: 28px !important; }
+      .section-title { font-size: 1.3rem; }
+      .section-title::after { bottom: -5px; width: 30px; }
+      .section-subtitle { font-size: 0.73rem; }
+      .category-tabs { flex-direction: column; gap: 0; border-bottom: none; }
+      .tab-btn { padding: 9px 14px; font-size: 0.9rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+      .tab-btn::after { display: none; }
+      .menu-grid { grid-template-columns: 1fr; }
+      .menu-card { padding: 22px 0; }
+      .card-content { flex-direction: column; gap: 12px; }
+      .dish-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .dish-name { font-size: 1.09rem; }
+      .dish-price { font-size: 1rem; }
+      .dish-description { font-size: 0.85rem; margin-bottom: 12px; }
+      .view-3d-btn { font-size: 0.88rem; padding: 6px 12px; }
+      .ar-btn {
+        padding: 9px 13px; font-size: 0.92em; bottom: 7vw; right: 7vw;
+      }
+      .modal-content { width: 98vw; height: 86vw; min-height: 310px; max-height: 97vh; padding: 8px; }
+      .modal-header { margin-bottom: 13px; padding-bottom: 7px; }
+      .modal-title { font-size: 1rem; }
+      .close-btn { width: 32px; height: 32px; font-size: 1.08rem; padding: 7px 7px; }
+      .viewer-container { height: calc(100% - 60px); }
+      model-viewer { height: 170px !important; min-height: 130px !important; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Logo Bar -->
+  <div class="logo-bar" id="logoBar">
+    <div class="logo-main">
+      <img src="image.jpg.jpeg" alt="The 90's Club Logo" />
+    </div>
+    <h1 class="main-title">The 90's Club</h1>
+    <p class="subtitle">Fine Dining Experience</p>
+  </div>
+
+  <!-- Full Menu Section (hidden initially) -->
+  <div class="menu-full" id="menuFull">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Menu</h2>
+        <p class="section-subtitle">Curated Selection</p>
+      </div>
+      <div class="category-tabs">
+        <button class="tab-btn active" onclick="showCategory('appetizers')">Appetizers</button>
+        <button class="tab-btn" onclick="showCategory('mains')">Main Courses</button>
+        <button class="tab-btn" onclick="showCategory('desserts')">Desserts</button>
+      </div>
+      <div class="menu-category active" id="appetizers">
+        <div class="menu-grid">
+          <div>
+            <div class="menu-card">
+              <div class="card-content">
+                <div class="dish-info">
+                  <div class="dish-header">
+                    <h3 class="dish-name">Truffle Arancini</h3>
+                    <div class="dish-price">$18</div>
+                  </div>
+                  <p class="dish-description">Crispy risotto balls infused with black truffle, aged parmesan, and herb aioli</p>
+                  <div class="card-actions">
+                    <button class="view-3d-btn" onclick="open3DViewer('Truffle Arancini')">VIEW 3D</button>
+                    <span class="popularity-badge">SIGNATURE</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="menu-card">
+              <div class="card-content">
+                <div class="dish-info">
+                  <div class="dish-header">
+                    <h3 class="dish-name">Seared Scallops</h3>
+                    <div class="dish-price">$24</div>
+                  </div>
+                  <p class="dish-description">Pan-seared scallops with cauliflower purée, pancetta crisps, and microgreens</p>
+                  <div class="card-actions">
+                    <button class="view-3d-btn" onclick="open3DViewer('Seared Scallops')">VIEW 3D</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="menu-card">
+              <div class="card-content">
+                <div class="dish-info">
+                  <div class="dish-header">
+                    <h3 class="dish-name">Burrata Caprese</h3>
+                    <div class="dish-price">$16</div>
+                  </div>
+                  <p class="dish-description">Fresh burrata with heirloom tomatoes, basil oil, and aged balsamic reduction</p>
+                  <div class="card-actions">
+                    <button class="view-3d-btn" onclick="open3DViewer('Burrata Caprese')">VIEW 3D</button>
+                    <span class="popularity-badge">POPULAR</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="menu-category" id="mains">
+        <div class="menu-grid">
+          <div>
+            <div class="menu-card">
+              <div class="card-content">
+                <div class="dish-info">
+                  <div class="dish-header">
+                    <h3 class="dish-name">Rosemary Lamb Chops</h3>
+                    <div class="dish-price">$38</div>
+                  </div>
+                  <p class="dish-description">Grilled lamb chops with rosemary, garlic mashed potatoes, and seasonal vegetables</p>
+                  <div class="card-actions">
+                    <button class="view-3d-btn" disabled>COMING SOON</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="menu-card">
+              <div class="card-content">
+                <div class="dish-info">
+                  <div class="dish-header">
+                    <h3 class="dish-name">Miso Glazed Salmon</h3>
+                    <div class="dish-price">$32</div>
+                  </div>
+                  <p class="dish-description">Atlantic salmon fillet glazed with miso, soba noodles, bok choy, and ponzu sauce</p>
+                  <div class="card-actions">
+                    <button class="view-3d-btn" disabled>COMING SOON</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="menu-category" id="desserts">
+        <div class="menu-grid">
+          <div>
+            <div class="menu-card">
+              <div class="card-content">
+                <div class="dish-info">
+                  <div class="dish-header">
+                    <h3 class="dish-name">Classic Tiramisu</h3>
+                    <div class="dish-price">$12</div>
+                  </div>
+                  <p class="dish-description">Traditional Italian tiramisu with espresso-soaked ladyfingers and mascarpone cream</p>
+                  <div class="card-actions">
+                    <button class="view-3d-btn" disabled>COMING SOON</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="menu-card">
+              <div class="card-content">
+                <div class="dish-info">
+                  <div class="dish-header">
+                    <h3 class="dish-name">Chocolate Fondant</h3>
+                    <div class="dish-price">$14</div>
+                  </div>
+                  <p class="dish-description">Warm chocolate cake with a molten center, served with vanilla bean gelato</p>
+                  <div class="card-actions">
+                    <button class="view-3d-btn" disabled>COMING SOON</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="modal-title" id="modelTitle"></span>
+        <button class="close-btn" onclick="close3DViewer()">&times;</button>
+      </div>
+      <div class="viewer-container">
+        <model-viewer
+          id="mainModelViewer"
+          src=""
+          alt="3D Dish Model"
+          camera-controls
+          shadow-intensity="1"
+          style="width: 100%; height: 100%; background: #181818; border-radius: 8px;"
+        ></model-viewer>
+        <button class="ar-btn" id="arBtn" style="display: none;">View in AR (Camera)</button>
+      </div>
+    </div>
+  </div>
+
+  
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<script>
+  function showCategory(category) {
+    const cats = document.querySelectorAll(".menu-category");
+    const tabs = document.querySelectorAll(".tab-btn");
+    cats.forEach((c) => c.classList.remove("active"));
+    tabs.forEach((t) => t.classList.remove("active"));
+    document.getElementById(category).classList.add("active");
+    event.target.classList.add("active");
+  }
+
+  // New URLs for each dish, with both glb and usdz
+  const modelMap = {
+    "Truffle Arancini": {
+      glb: "https://raw.githubusercontent.com/yashasvidesh03-cmd/New-website/main/model_1.glb",
+      usdz: "https://raw.githubusercontent.com/yashasvidesh03-cmd/New-website/main/Abandoned__Building__Shop__Old__House.usdz",
+      title: "Truffle Arancini",
+    },
+    "Seared Scallops": {
+      glb: "https://raw.githubusercontent.com/yashasvidesh03-cmd/New-website/main/model_2.glb",
+      usdz: "https://raw.githubusercontent.com/yashasvidesh03-cmd/New-website/main/10_Genshin_Impact_Inspired_Sword_3D_Models.usdz",
+      title: "Seared Scallops",
+    },
+    "Burrata Caprese": {
+      glb: "https://raw.githubusercontent.com/yashasvidesh03-cmd/New-website/main/model_3.glb",
+      usdz: "https://raw.githubusercontent.com/yashasvidesh03-cmd/New-website/main/9_mm.usdz",
+      title: "Burrata Caprese",
+    },
+  };
+
+  // Utility to detect iOS
+  function isIOS() {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  }
+  // Utility to detect Android
+  function isAndroid() {
+    return /android/i.test(navigator.userAgent);
+  }
+
+  function open3DViewer(dishName) {
+    const model = modelMap
