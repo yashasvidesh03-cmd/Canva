@@ -541,4 +541,73 @@
   }
 
   function open3DViewer(dishName) {
-    const model = modelMap
+    const model = modelMap[dishName];
+    if (!model) return;
+
+    document.getElementById("modelTitle").innerText = model.title + " 3D View";
+    document.getElementById("modalOverlay").classList.add("active");
+    const viewerContainer = document.getElementById("mainModelViewer").parentNode;
+    // Remove old AR/3D embeds if any, then add new
+    const modelViewer = document.getElementById("mainModelViewer");
+    modelViewer.style.display = "none";
+
+    // Clean old AR anchor if any
+    let oldArLink = document.getElementById("arQuickLookAnchor");
+    if (oldArLink) oldArLink.remove();
+
+    const arBtn = document.getElementById("arBtn");
+    arBtn.style.display = "none";
+    arBtn.onclick = null;
+
+    if (isIOS()) {
+      // Show Apple AR Quick Look for usdz
+      const arLink = document.createElement("a");
+      arLink.setAttribute("rel", "ar");
+      arLink.setAttribute("href", model.usdz);
+      arLink.setAttribute("id", "arQuickLookAnchor");
+      arLink.innerHTML = '<button class="ar-btn" style="display:block;">View in AR</button>';
+      // Insert anchor after viewer or as child of viewer container
+      viewerContainer.appendChild(arLink);
+    } else {
+      // Show glb in model-viewer (Android/Other)
+      modelViewer.src = model.glb;
+      modelViewer.style.display = "block";
+      if (isAndroid()) {
+        arBtn.style.display = "block";
+        arBtn.onclick = function () {
+          const intent =
+                 `intent://arvr.google.com/scene-viewer/1.0?file=${encodeURIComponent(model.glb)}&mode=ar_preferred&title=${encodeURIComponent(model.title)}#Intent;scheme=https;package=com.google.ar.core;action=android.intent.action.VIEW;S.browser_fallback_url=${encodeURIComponent(location.href)};end;`;
+          window.location.href = intent;
+        };
+      }
+    }
+  }
+
+  function close3DViewer() {
+    document.getElementById("modalOverlay").classList.remove("active");
+    document.getElementById("mainModelViewer").src = "";
+    const arBtn = document.getElementById("arBtn");
+    arBtn.style.display = "none";
+    arBtn.onclick = null;
+    // Clean up AR Quick Look anchor if it exists
+    let oldArLink = document.getElementById("arQuickLookAnchor");
+    if (oldArLink) oldArLink.remove();
+    // Reset viewer
+    document.getElementById("mainModelViewer").style.display = "block";
+  }
+  document.getElementById("modalOverlay").onclick = function (event) {
+    if (event.target === this) close3DViewer();
+  };
+
+  window.onload = function () {
+    const logoBar = document.getElementById("logoBar");
+    const menuFull = document.getElementById("menuFull");
+    logoBar.classList.add("moved-right");
+    setTimeout(() => {
+      menuFull.classList.add("active");
+    }, 1000);
+  };
+</script>
+  
+</body>
+</html>
