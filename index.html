@@ -3,479 +3,474 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>The 90's Club – Indian Old Skool Menu</title>
-  <meta name="description" content="Step into the 90s – Indian menu with immersive 3D retro previews." />
-  <meta name="keywords" content="restaurant, Indian, 90s, nostalgia, retro, menu, old school, AR, The 90's Club" />
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <title>The 90's Club – Fine Dining Experience</title>
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="The 90's Club – Fine dining experience with 3D dish previews and AR menus." />
+  <meta name="keywords" content="fine dining, 3D menu, AR restaurant, The 90's Club, gourmet food, interactive menu" />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://yashasvidesh03-cmd.github.io/New-website/" />
+  <meta property="og:title" content="The 90's Club – Fine Dining Experience" />
+  <meta property="og:description" content="Explore our curated menu with immersive 3D and AR previews." />
+  <meta property="og:url" content="https://yashasvidesh03-cmd.github.io/New-website/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://yashasvidesh03-cmd.github.io/New-website/image.jpg.jpeg" />
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://yashasvidesh03-cmd.github.io/New-website/image.jpg.jpeg">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --neon-pink: #fc56a1;
-      --neon-green: #49fb35;
-      --cream-bg: #f9eaa0;
-      --deep-maroon: #71292e;
-      --shadow: 0 2px 24px #71292e55;
-    }
-    html, body { min-height: 100vh; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: 'Baloo 2', cursive;
-      background: var(--cream-bg);
-      color: var(--deep-maroon);
-      line-height: 1.7;
+      font-family: "Inter", sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+      line-height: 1.6;
       min-height: 100vh;
       overflow-x: hidden;
-      position: relative;
     }
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      z-index: -2;
-      background: repeating-linear-gradient(135deg, #fae9d9 0, #fff7e0 50px, #f6f193 130px, #f9eaa0 200px);
-      opacity: 0.9;
-      filter: blur(1px);
-      animation: bgShift 20s linear infinite alternate;
-    }
-    @keyframes bgShift {
-      0% {background-position: 0 0;}
-      100% {background-position: 800px 600px;}
-    }
-    .vhs-glow {
-      text-shadow: 0 0 8px var(--neon-pink), 0 0 18px var(--neon-green), 0 0 4px #fff6;
-    }
-    /* Retro Header */
     .logo-bar {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
       position: fixed;
-      top: 28px;
-      left: 25px;
-      z-index: 1111;
-      gap: 24px;
+      top: 40px;
+      right: 60px;
+      transform: none;
+      z-index: 1100;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      transition:
+        right 1s cubic-bezier(0.77,0,0.18,1),
+        top 1s cubic-bezier(0.77,0,0.18,1),
+        transform 1s cubic-bezier(0.77,0,0.18,1);
+    }
+    .logo-bar.moved-right {
+      right: 60px;
+      top: 40px;
+      transform: none;
+      align-items: flex-end;
     }
     .logo-main {
-      width: 70px;
-      height: 70px;
-      background: radial-gradient(circle, var(--neon-pink) 28%, var(--neon-green) 100%);
+      width: 80px;
+      height: 80px;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #d4af37 0%, #f4e4a6 100%);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 3px dashed var(--deep-maroon);
-      box-shadow: var(--shadow);
-      outline: 6px double #fff;
+      box-shadow: 0 10px 30px rgba(212,175,55,0.2);
+      border: 1px solid rgba(212,175,55,0.3);
       overflow: hidden;
     }
     .logo-main img {
-      width: 56px; height: 56px;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
       object-fit: cover;
-      border: 3px solid #fff;
+      display: block;
+      background: #000;
     }
     .main-title {
-      font-family: 'Press Start 2P', cursive;
-      font-size: 1.11rem;
-      color: var(--neon-pink);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      line-height: 1.1;
-      padding-top:6px;
-      text-shadow: 2px 2px 0 #fff, 0 2px 16px var(--neon-green);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.4rem;
+      font-weight: 300;
+      color: #fff;
+      letter-spacing: 3px;
+      margin-bottom: 4px;
+      text-align: right;
     }
-    /* Menu Card Animation */
+    .subtitle {
+      font-size: 0.85rem;
+      color: #d4af37;
+      opacity: 0.9;
+      font-weight: 300;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-left: 0;
+      text-align: right;
+    }
     .menu-full {
-      margin-top: 105px;
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100vw;
-      background: #fff7deff;
-      border-top: 10px solid var(--neon-pink);
-      border-bottom: 10px solid var(--neon-green);
-      box-shadow: var(--shadow);
-      animation: fadeIn 2s cubic-bezier(.5,.02,.45,.83);
-      padding-bottom: 58px;
+      height: 100vh;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+      overflow-y: auto;
+      padding-left: 200px;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.7s cubic-bezier(.5,.02,.45,.83);
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+    .menu-full.active {
+      opacity: 1;
+      pointer-events: auto;
     }
     .container {
-      max-width: 900px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 50px 15px 100px 15px;
+      padding: 40px 40px 120px 40px;
+      width: 100%;
     }
-    .section-header { text-align: center; margin-bottom: 60px; }
+    .section-header { text-align: center; margin-bottom: 80px; }
     .section-title {
-      font-family: 'Press Start 2P', cursive;
-      font-size: 2.1rem;
-      color: var(--neon-pink);
-      margin-bottom: 10px;
-      text-shadow: 2px 4px 0 #fff, 0 2px 32px var(--neon-green);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 3rem;
+      font-weight: 300;
+      color: #fff;
+      margin-bottom: 20px;
+      position: relative;
+      letter-spacing: 2px;
+    }
+    .section-title::after {
+      content: "";
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 1px;
+      background: #d4af37;
     }
     .section-subtitle {
-      font-size: 1.07rem;
-      color: var(--deep-maroon);
+      font-size: 0.9rem;
+      color: #888888;
+      font-weight: 300;
+      letter-spacing: 2px;
       text-transform: uppercase;
-      font-family: 'Baloo 2', cursive;
-      letter-spacing: 3px;
-      margin-bottom: 12px;
-      border-bottom: 4px double var(--deep-maroon);
-      display: inline-block;
-      padding-bottom: 2px;
     }
     .category-tabs {
       display: flex;
       justify-content: center;
-      margin-bottom: 44px;
-      border-bottom: 2px dashed var(--neon-pink);
+      margin-bottom: 80px;
       gap: 0;
+      border-bottom: 1px solid rgba(212,175,55,0.2);
     }
     .tab-btn {
       background: transparent;
       border: none;
-      color: var(--deep-maroon);
-      padding: 13px 27px;
-      font-size: 1rem;
+      color: #888888;
+      padding: 20px 40px;
+      font-family: "Inter", sans-serif;
+      font-size: 0.9rem;
+      font-weight: 400;
       cursor: pointer;
-      font-weight: bold;
-      font-family: 'Baloo 2', cursive;
-      letter-spacing: 2px;
+      transition: all 0.3s ease;
       text-transform: uppercase;
+      letter-spacing: 2px;
       position: relative;
-      border-radius:5px;
-      transition: all 0.16s;
     }
-    .tab-btn.active, .tab-btn:hover {
-      color: var(--cream-bg);
-      background: var(--neon-pink);
-      box-shadow: 0 2px 10px #71292e40;
+    .tab-btn::after {
+      content: "";
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #d4af37;
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
     }
+    .tab-btn:hover, .tab-btn.active { color: #fff; }
+    .tab-btn.active::after { transform: scaleX(1); }
     .menu-category { display: none; }
-    .menu-category.active { display: block; animation: fadeIn 1s;}
+    .menu-category.active { display: block; animation: fadeIn 0.6s ease-out; }
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(35px);}
-      to { opacity: 1; transform: translateY(0);}
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     .menu-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 15px;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: 0;
     }
     .menu-card {
-      background: #fffbe7cc;
-      padding: 29px 22px 19px 20px;
-      border: 3px double var(--neon-green);
-      border-radius: 18px;
-      margin-bottom: 20px;
+      background: transparent;
+      padding: 40px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.3s ease;
       position: relative;
-      box-shadow: 0 2px 16px #71292e16;
-      transition: transform 0.2s;
     }
     .menu-card:hover {
-      transform: scale(1.035) rotate(-1.5deg);
-      background: #fdfdc3ee;
-      border-color: var(--neon-pink);
+      background: rgba(212,175,55,0.02);
+      padding-left: 20px;
+      padding-right: 20px;
     }
-    .card-content {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .dish-info { flex: 1;}
+    .card-content { display: flex; justify-content: space-between; align-items: flex-start; gap: 30px; }
+    .dish-info { flex: 1; }
     .dish-header {
-      display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 7px; gap: 13px;
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: 12px; gap: 20px;
     }
     .dish-name {
-      font-family: 'Baloo 2', cursive;
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--deep-maroon);
-      letter-spacing:1px;
-      padding-bottom: 2px;
+      font-family: "Cormorant Garamond", serif; font-size: 1.4rem; font-weight: 500;
+      color: #fff; letter-spacing: 1px;
     }
     .dish-price {
-      font-size: 1.11rem;
-      color: var(--neon-green);
-      font-family: 'Baloo 2', cursive;
-      font-weight: 700;
+      font-family: "Inter", sans-serif; font-size: 1.1rem; font-weight: 400;
+      color: #d4af37; white-space: nowrap;
     }
     .dish-description {
-      color: #51282b;
-      font-size: 1.07rem;
-      margin-bottom: 10px;
-      text-shadow: 0 2px 0 #fff;
+      color: #aaaaaa; font-size: 0.9rem; line-height: 1.6;
+      margin-bottom: 20px; font-weight: 300;
     }
-    .card-actions { margin-top: 9px;}
-    .popularity-badge {
-      display: inline-block;
-      background: var(--neon-pink);
-      color: #fff;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      font-family: 'Baloo 2', cursive;
-      font-weight: 700;
-      padding: 4px 12px;
-      margin-left: 7px;
-      box-shadow: 0 1px 4px #fc56a188;
-      letter-spacing: 2px;
-      margin-top: 6px;
-    }
-    /* 3D & AR button */
+    .card-actions { display: flex; align-items: center; gap: 20px; }
     .view-3d-btn {
-      background: var(--neon-green);
-      color: #71292e;
-      padding: 7px 19px;
-      font-size: 0.97rem;
-      border: none;
-      border-radius: 5px;
-      font-family: 'Baloo 2', cursive;
-      font-weight: bold;
-      margin-right: 6px;
+      background: transparent;
+      border: 1px solid rgba(212,175,55,0.4);
+      border-radius: 0;
+      padding: 8px 20px;
+      color: #d4af37;
+      font-family: "Inter", sans-serif;
+      font-size: 0.8rem;
+      font-weight: 400;
       cursor: pointer;
-      box-shadow: 0 3px 6px #a9ecb4aa;
-      transition: background 0.2s, color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
-    .view-3d-btn[disabled] {
-      background: #eee;
-      color: #bbb;
-      cursor: not-allowed;
+    .view-3d-btn[disabled] { opacity: 0.4; cursor: not-allowed; border-style: dashed;}
+    .view-3d-btn:hover {
+      background: rgba(212,175,55,0.1);
+      border-color: #d4af37;
+      color: #fff;
     }
-    .view-3d-btn:hover { background: var(--neon-pink); color: #fff;}
-
-    /* Modal Overlay for 3D Viewer */
+    .popularity-badge {
+      background: transparent; color: #d4af37; padding: 4px 0;
+      font-size: 0.7rem; font-weight: 400; text-transform: uppercase;
+      letter-spacing: 1px; border-bottom: 1px solid rgba(212,175,55,0.3);
+    }
     .modal-overlay {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      background: rgba(252,86,161,0.51); z-index: 3000; display: none;
-      align-items: center; justify-content: center; backdrop-filter: blur(8px);
-      transition: all 0.7s;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.95); z-index: 2000; display: none;
+      align-items: center; justify-content: center; backdrop-filter: blur(10px);
     }
-    .modal-overlay.active { display: flex; }
+    .modal-overlay.active {
+      display: flex; animation: fadeIn 0.3s ease-out;
+    }
     .modal-content {
-      background: #fff;
-      border: 3px solid var(--neon-pink);
-      padding: 35px 24px;
-      width: 456px; min-height:215px; max-width: 93vw; box-shadow: 0 6px 44px #71292e60;
+      background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+      border: 1px solid rgba(212,175,55,0.2);
+      padding: 40px; max-width: 90vw; max-height: 90vh;
+      width: 800px; height: 600px; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.8);
       display: flex; flex-direction: column;
-      border-radius: 14px;
-      animation: fadeIn 0.6s;
-      position: relative;
     }
     .modal-header {
       display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 18px; padding-bottom: 10px;
-      border-bottom: 2px dashed var(--neon-pink);
+      margin-bottom: 30px; padding-bottom: 20px;
+      border-bottom: 1px solid rgba(212,175,55,0.2);
     }
     .modal-title {
-      font-family: 'Baloo 2', cursive; font-size: 1.19rem;
-      color: var(--deep-maroon); font-weight: 700;
+      font-family: "Cormorant Garamond", serif; font-size: 1.6rem;
+      color: #fff; margin: 0; font-weight: 400;
     }
     .close-btn {
-      background: transparent; border: none; color: var(--neon-pink);
-      font-size: 1.4rem; cursor: pointer;
-      padding: 4px 9px; border-radius: 50%;
-      font-weight: bold; transition: background 0.2s;
+      background: transparent; border: 1px solid rgba(212,175,55,0.4); color: #d4af37;
+      font-size: 1.2rem; cursor: pointer; padding: 8px 12px; width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;
+      font-weight: 300;
     }
-    .close-btn:hover { background: var(--neon-pink); color: #fff; }
+    .close-btn:hover { background: rgba(212,175,55,0.1); border-color: #d4af37; color: #fff; }
     .viewer-container {
-      width: 100%; height: 280px;
-      background: #f3f2cc;
-      border-radius: 9px;
+      width: 100%; height: calc(100% - 100px);
+      background: linear-gradient(45deg, #0a0a0a, #1a1a1a);
       display: flex; align-items: center; justify-content: center;
-      margin-top:10px;
+      border: 1px solid rgba(212,175,55,0.1); position: relative; overflow: hidden;
+      flex: 1;
     }
-    /* Responsive Styles */
-    @media (max-width:600px) {
-      .container { padding: 10px 2vw 45px 2vw; }
-      .logo-main { width: 44px; height: 44px; }
-      .logo-main img { width: 38px; height: 38px;}
-      .main-title { font-size: 0.75rem;}
-      .menu-card { padding: 12px 7px;}
-      .modal-content { width: 98vw; }
+    .ar-btn {
+      background: rgba(212,175,55,0.1);
+      color: #d4af37;
+      border: 1px solid #d4af37;
+      padding: 12px 24px;
+      font-size: 1em;
+      cursor: pointer;
+      border-radius: 8px;
+      position: absolute;
+      bottom: 30px;
+      right: 30px;
+      transition: all 0.3s ease;
+      z-index: 10;
+      display: none;
+    }
+    .ar-btn:hover { background: #d4af37; color: #0a0a0a; }
+
+    @media (max-width: 768px) {
+      .main-title { font-size: 1.4rem; }
+      .logo-bar { top: 12px; right: 15px; }
+      .logo-bar.moved-right { right: 15px; top: 8px; }
+      .logo-main { width: 50px; height: 50px; margin-bottom: 6px; }
+      .logo-main img { width: 40px; height: 40px; }
+      .menu-full { padding-left: 0; }
+      .container { padding: 10px 4vw 80px 4vw; }
+      .section-header, .section-title { margin-bottom: 28px !important; }
+      .section-title { font-size: 1.3rem; }
+      .section-title::after { bottom: -5px; width: 30px; }
+      .section-subtitle { font-size: 0.73rem; }
+      .category-tabs { flex-direction: column; gap: 0; border-bottom: none; }
+      .tab-btn { padding: 9px 14px; font-size: 0.9rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
+      .tab-btn::after { display: none; }
+      .menu-grid { grid-template-columns: 1fr; }
+      .menu-card { padding: 22px 0; }
+      .card-content { flex-direction: column; gap: 12px; }
+      .dish-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .dish-name { font-size: 1.09rem; }
+      .dish-price { font-size: 1rem; }
+      .dish-description { font-size: 0.85rem; margin-bottom: 12px; }
+      .view-3d-btn { font-size: 0.88rem; padding: 6px 12px; }
+      .ar-btn {
+        padding: 9px 13px; font-size: 0.92em; bottom: 7vw; right: 7vw;
+      }
+      .modal-content { width: 98vw; height: 86vw; min-height: 310px; max-height: 97vh; padding: 8px; }
+      .modal-header { margin-bottom: 13px; padding-bottom: 7px; }
+      .modal-title { font-size: 1rem; }
+      .close-btn { width: 32px; height: 32px; font-size: 1.08rem; padding: 7px 7px; }
+      .viewer-container { height: calc(100% - 60px); }
+      model-viewer { height: 170px !important; min-height: 130px !important; }
     }
   </style>
 </head>
 <body>
+  <!-- Logo Bar -->
   <div class="logo-bar" id="logoBar">
-    <div class="logo-main vhs-glow">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Old_Indian_restaurant_sign.jpg/320px-Old_Indian_restaurant_sign.jpg" alt="The 90's Club Logo" />
+    <div class="logo-main">
+      <img src="image.jpg.jpeg" alt="The 90's Club Logo" />
     </div>
-    <h1 class="main-title vhs-glow">The 90's Club</h1>
+    <h1 class="main-title">The 90's Club</h1>
+    <p class="subtitle">Fine Dining Experience</p>
   </div>
 
+  <!-- Full Menu Section (hidden initially) -->
   <div class="menu-full" id="menuFull">
     <div class="container">
       <div class="section-header">
-        <h2 class="section-title vhs-glow">Old Skool Indian Menu</h2>
-        <p class="section-subtitle">Taste of the 90s</p>
+        <h2 class="section-title">Menu</h2>
+        <p class="section-subtitle">Curated Selection</p>
       </div>
       <div class="category-tabs">
         <button class="tab-btn active" onclick="showCategory('appetizers')">Appetizers</button>
-        <button class="tab-btn" onclick="showCategory('mains')">Main Course</button>
+        <button class="tab-btn" onclick="showCategory('mains')">Main Courses</button>
         <button class="tab-btn" onclick="showCategory('desserts')">Desserts</button>
       </div>
-      <!-- Appetizers -->
       <div class="menu-category active" id="appetizers">
         <div class="menu-grid">
-          <div class="menu-card">
-            <div class="card-content">
-              <div class="dish-info">
-                <div class="dish-header">
-                  <span class="dish-name">Bread Pakora</span>
-                  <span class="dish-price">₹30</span>
-                </div>
-                <span class="dish-description">Classic deep-fried sandwich of spicy potato filling and gram flour, a true 90s Bombay snack.</span>
-                <div class="card-actions">
-                  <button class="view-3d-btn" disabled>COMING SOON</button>
-                  <span class="popularity-badge">90s STREET HIT</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="menu-card">
-            <div class="card-content">
-              <div class="dish-info">
-                <div class="dish-header">
-                  <span class="dish-name">Stuffed Paratha</span>
-                  <span class="dish-price">₹45</span>
-                </div>
-                <span class="dish-description">Pan-fried whole wheat flatbread stuffed with potato, paneer or vegetables – best with pickle & white butter.</span>
-                <div class="card-actions">
-                  <button class="view-3d-btn" disabled>COMING SOON</button>
-                  <span class="popularity-badge">WEEKEND FAV</span>
+          <div>
+            <div class="menu-card">
+              <div class="card-content">
+                <div class="dish-info">
+                  <div class="dish-header">
+                    <h3 class="dish-name">Truffle Arancini</h3>
+                    <div class="dish-price">$18</div>
+                  </div>
+                  <p class="dish-description">Crispy risotto balls infused with black truffle, aged parmesan, and herb aioli</p>
+                  <div class="card-actions">
+                    <button class="view-3d-btn" onclick="open3DViewer('Truffle Arancini')">VIEW 3D</button>
+                    <span class="popularity-badge">SIGNATURE</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="menu-card">
-            <div class="card-content">
-              <div class="dish-info">
-                <div class="dish-header">
-                  <span class="dish-name">Aloo Patties</span>
-                  <span class="dish-price">₹28</span>
+            <div class="menu-card">
+              <div class="card-content">
+                <div class="dish-info">
+                  <div class="dish-header">
+                    <h3 class="dish-name">Seared Scallops</h3>
+                    <div class="dish-price">$24</div>
+                  </div>
+                  <p class="dish-description">Pan-seared scallops with cauliflower purée, pancetta crisps, and microgreens</p>
+                  <div class="card-actions">
+                    <button class="view-3d-btn" onclick="open3DViewer('Seared Scallops')">VIEW 3D</button>
+                  </div>
                 </div>
-                <span class="dish-description">Crispy pastry with spicy potato filling, found in every canteen and bakery during the 90s.</span>
-                <div class="card-actions">
-                  <button class="view-3d-btn" disabled>COMING SOON</button>
+              </div>
+            </div>
+            <div class="menu-card">
+              <div class="card-content">
+                <div class="dish-info">
+                  <div class="dish-header">
+                    <h3 class="dish-name">Burrata Caprese</h3>
+                    <div class="dish-price">$16</div>
+                  </div>
+                  <p class="dish-description">Fresh burrata with heirloom tomatoes, basil oil, and aged balsamic reduction</p>
+                  <div class="card-actions">
+                    <button class="view-3d-btn" onclick="open3DViewer('Burrata Caprese')">VIEW 3D</button>
+                    <span class="popularity-badge">POPULAR</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <!-- Mains -->
       <div class="menu-category" id="mains">
         <div class="menu-grid">
-          <div class="menu-card">
-            <div class="card-content">
-              <div class="dish-info">
-                <div class="dish-header">
-                  <span class="dish-name">Chole Bhature</span>
-                  <span class="dish-price">₹110</span>
-                </div>
-                <span class="dish-description">Tangy & spicy chickpea curry with fluffy fried bhature, a weekend treat in many homes.</span>
-                <div class="card-actions">
-                  <button class="view-3d-btn" disabled>COMING SOON</button>
-                  <span class="popularity-badge">RETRO CLASSIC</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="menu-card">
-            <div class="card-content">
-              <div class="dish-info">
-                <div class="dish-header">
-                  <span class="dish-name">Rajma Chawal</span>
-                  <span class="dish-price">₹80</span>
-                </div>
-                <span class="dish-description">Red kidney bean curry with jeera rice and ghee, the original comfort food of North India.</span>
-                <div class="card-actions">
-                  <button class="view-3d-btn" disabled>COMING SOON</button>
+          <div>
+            <div class="menu-card">
+              <div class="card-content">
+                <div class="dish-info">
+                  <div class="dish-header">
+                    <h3 class="dish-name">Rosemary Lamb Chops</h3>
+                    <div class="dish-price">$38</div>
+                  </div>
+                  <p class="dish-description">Grilled lamb chops with rosemary, garlic mashed potatoes, and seasonal vegetables</p>
+                  <div class="card-actions">
+                    <button class="view-3d-btn" disabled>COMING SOON</button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="menu-card">
-            <div class="card-content">
-              <div class="dish-info">
-                <div class="dish-header">
-                  <span class="dish-name">Butter Chicken</span>
-                  <span class="dish-price">₹155</span>
-                </div>
-                <span class="dish-description">Velvety chicken in creamy tomato gravy, best enjoyed with hot chapatis or naan.</span>
-                <div class="card-actions">
-                  <button class="view-3d-btn" disabled>COMING SOON</button>
-                  <span class="popularity-badge">ICONIC 90s</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="menu-card">
-            <div class="card-content">
-              <div class="dish-info">
-                <div class="dish-header">
-                  <span class="dish-name">Aloo Puri</span>
-                  <span class="dish-price">₹70</span>
-                </div>
-                <span class="dish-description">Fluffy puris and tangy aloo ki sabzi, the go-to Sunday brunch for 90s households.</span>
-                <div class="card-actions">
-                  <button class="view-3d-btn" disabled>COMING SOON</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="menu-card">
-            <div class="card-content">
-              <div class="dish-info">
-                <div class="dish-header">
-                  <span class="dish-name">Dosa with Sambhar</span>
-                  <span class="dish-price">₹65</span>
-                </div>
-                <span class="dish-description">South Indian crispy crepe with aromatic sambhar, the beloved breakfast across the nation.</span>
-                <div class="card-actions">
-                  <button class="view-3d-btn" disabled>COMING SOON</button>
+            <div class="menu-card">
+              <div class="card-content">
+                <div class="dish-info">
+                  <div class="dish-header">
+                    <h3 class="dish-name">Miso Glazed Salmon</h3>
+                    <div class="dish-price">$32</div>
+                  </div>
+                  <p class="dish-description">Atlantic salmon fillet glazed with miso, soba noodles, bok choy, and ponzu sauce</p>
+                  <div class="card-actions">
+                    <button class="view-3d-btn" disabled>COMING SOON</button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <!-- Desserts -->
       <div class="menu-category" id="desserts">
         <div class="menu-grid">
-          <div class="menu-card">
-            <div class="card-content">
-              <div class="dish-info">
-                <div class="dish-header">
-                  <span class="dish-name">Bread Jam</span>
-                  <span class="dish-price">₹10</span>
-                </div>
-                <span class="dish-description">Soft white bread smothered with sweet fruit jam, a tiffin treat from every 90s childhood.</span>
-                <div class="card-actions">
-                  <button class="view-3d-btn" disabled>COMING SOON</button>
-                  <span class="popularity-badge">NOSTALGIA HIT</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="menu-card">
-            <div class="card-content">
-              <div class="dish-info">
-                <div class="dish-header">
-                  <span class="dish-name">Pineapple Pastry</span>
-                  <span class="dish-price">₹22</span>
-                </div>
-                <span class="dish-description">Retro bakery classic - airy vanilla sponge layered with pineapple and whipped cream.</span>
-                <div class="card-actions">
-                  <button class="view-3d-btn" disabled>COMING SOON</button>
+          <div>
+            <div class="menu-card">
+              <div class="card-content">
+                <div class="dish-info">
+                  <div class="dish-header">
+                    <h3 class="dish-name">Classic Tiramisu</h3>
+                    <div class="dish-price">$12</div>
+                  </div>
+                  <p class="dish-description">Traditional Italian tiramisu with espresso-soaked ladyfingers and mascarpone cream</p>
+                  <div class="card-actions">
+                    <button class="view-3d-btn" disabled>COMING SOON</button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="menu-card">
-            <div class="card-content">
-              <div class="dish-info">
-                <div class="dish-header">
-                  <span class="dish-name">Jalebi</span>
-                  <span class="dish-price">₹20</span>
-                </div>
-                <span class="dish-description">Crispy hot coils dipped in saffron syrup, the sweet aroma wafting in every lane of the 90s.</span>
-                <div class="card-actions">
-                  <button class="view-3d-btn" disabled>COMING SOON</button>
+            <div class="menu-card">
+              <div class="card-content">
+                <div class="dish-info">
+                  <div class="dish-header">
+                    <h3 class="dish-name">Chocolate Fondant</h3>
+                    <div class="dish-price">$14</div>
+                  </div>
+                  <p class="dish-description">Warm chocolate cake with a molten center, served with vanilla bean gelato</p>
+                  <div class="card-actions">
+                    <button class="view-3d-btn" disabled>COMING SOON</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -485,7 +480,6 @@
     </div>
   </div>
 
-  <!-- Modal Viewer (dummy for retro effect, can be completed with real 3D/AR later) -->
   <div class="modal-overlay" id="modalOverlay">
     <div class="modal-content">
       <div class="modal-header">
@@ -493,25 +487,127 @@
         <button class="close-btn" onclick="close3DViewer()">&times;</button>
       </div>
       <div class="viewer-container">
-        <span style="color:#fc56a1;text-align:center;display:block;font-size:1.25em;">
-          3D Preview Coming Soon!
-        </span>
+        <model-viewer
+          id="mainModelViewer"
+          src=""
+          alt="3D Dish Model"
+          camera-controls
+          shadow-intensity="1"
+          style="width: 100%; height: 100%; background: #181818; border-radius: 8px;"
+        ></model-viewer>
+        <button class="ar-btn" id="arBtn" style="display: none;">View in AR (Camera)</button>
       </div>
     </div>
   </div>
-  <script>
-    function showCategory(category) {
-      const cats = document.querySelectorAll(".menu-category");
-      document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
-      event.target.classList.add("active");
-      cats.forEach(c => c.classList.remove("active"));
-      document.getElementById(category).classList.add("active");
-    }
-    function close3DViewer() {
-      document.getElementById("modalOverlay").classList.remove("active");
-      document.getElementById("modelTitle").innerText = "";
-    }
-  </script>
-</body>
-  </html>
+
   
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<script>
+  function showCategory(category) {
+    const cats = document.querySelectorAll(".menu-category");
+    const tabs = document.querySelectorAll(".tab-btn");
+    cats.forEach((c) => c.classList.remove("active"));
+    tabs.forEach((t) => t.classList.remove("active"));
+    document.getElementById(category).classList.add("active");
+    event.target.classList.add("active");
+  }
+
+  // New URLs for each dish, with both glb and usdz
+  const modelMap = {
+    "Truffle Arancini": {
+      glb: "https://raw.githubusercontent.com/yashasvidesh03-cmd/New-website/main/model_1.glb",
+      usdz: "https://raw.githubusercontent.com/yashasvidesh03-cmd/New-website/main/Abandoned__Building__Shop__Old__House.usdz",
+      title: "Truffle Arancini",
+    },
+    "Seared Scallops": {
+      glb: "https://raw.githubusercontent.com/yashasvidesh03-cmd/New-website/main/model_2.glb",
+      usdz: "https://raw.githubusercontent.com/yashasvidesh03-cmd/New-website/main/10_Genshin_Impact_Inspired_Sword_3D_Models.usdz",
+      title: "Seared Scallops",
+    },
+    "Burrata Caprese": {
+      glb: "https://raw.githubusercontent.com/yashasvidesh03-cmd/New-website/main/model_3.glb",
+      usdz: "https://raw.githubusercontent.com/yashasvidesh03-cmd/New-website/main/9_mm.usdz",
+      title: "Burrata Caprese",
+    },
+  };
+
+  // Utility to detect iOS
+  function isIOS() {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  }
+  // Utility to detect Android
+  function isAndroid() {
+    return /android/i.test(navigator.userAgent);
+  }
+
+  function open3DViewer(dishName) {
+    const model = modelMapdishName];
+    if (!model) return;
+
+    document.getElementById("modelTitle").innerText = model.title + " 3D View";
+    document.getElementById("modalOverlay").classList.add("active");
+    const viewerContainer = document.getElementById("mainModelViewer").parentNode;
+    // Remove old AR/3D embeds if any, then add new
+    const modelViewer = document.getElementById("mainModelViewer");
+    modelViewer.style.display = "none";
+
+    // Clean old AR anchor if any
+    let oldArLink = document.getElementById("arQuickLookAnchor");
+    if (oldArLink) oldArLink.remove();
+
+    const arBtn = document.getElementById("arBtn");
+    arBtn.style.display = "none";
+    arBtn.onclick = null;
+
+    if (isIOS()) {
+      // Show Apple AR Quick Look for usdz
+      const arLink = document.createElement("a");
+      arLink.setAttribute("rel", "ar");
+      arLink.setAttribute("href", model.usdz);
+      arLink.setAttribute("id", "arQuickLookAnchor");
+      arLink.innerHTML = '<button class="ar-btn" style="display:block;">View in AR</button>';
+      // Insert anchor after viewer or as child of viewer container
+      viewerContainer.appendChild(arLink);
+    } else {
+      // Show glb in model-viewer (Android/Other)
+      modelViewer.src = model.glb;
+      modelViewer.style.display = "block";
+      if (isAndroid()) {
+        arBtn.style.display = "block";
+        arBtn.onclick = function () {
+          const intent =
+                 `intent://arvr.google.com/scene-viewer/1.0?file=${encodeURIComponent(model.glb)}&mode=ar_preferred&title=${encodeURIComponent(model.title)}#Intent;scheme=https;package=com.google.ar.core;action=android.intent.action.VIEW;S.browser_fallback_url=${encodeURIComponent(location.href)};end;`;
+          window.location.href = intent;
+        };
+      }
+    }
+  }
+
+  function close3DViewer() {
+    document.getElementById("modalOverlay").classList.remove("active");
+    document.getElementById("mainModelViewer").src = "";
+    const arBtn = document.getElementById("arBtn");
+    arBtn.style.display = "none";
+    arBtn.onclick = null;
+    // Clean up AR Quick Look anchor if it exists
+    let oldArLink = document.getElementById("arQuickLookAnchor");
+    if (oldArLink) oldArLink.remove();
+    // Reset viewer
+    document.getElementById("mainModelViewer").style.display = "block";
+  }
+  document.getElementById("modalOverlay").onclick = function (event) {
+    if (event.target === this) close3DViewer();
+  };
+
+  window.onload = function () {
+    const logoBar = document.getElementById("logoBar");
+    const menuFull = document.getElementById("menuFull");
+    logoBar.classList.add("moved-right");
+    setTimeout(() => {
+      menuFull.classList.add("active");
+    }, 1000);
+  };
+</script>
+  
+</body>
+</html>
