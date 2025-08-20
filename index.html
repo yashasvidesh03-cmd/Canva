@@ -9,14 +9,14 @@
   <meta name="description" content="The 90's Club – Fine dining experience with 3D dish previews and AR menus." />
   <meta name="keywords" content="fine dining, 3D menu, AR restaurant, The 90's Club, gourmet food, interactive menu" />
   <meta name="robots" content="index,follow" />
-  <link rel="canonical" href="https://yashasvidesh03-cmd.github.io/New-website/" />
+  <link rel="canonical" href="https://yashasvidesh03-cmd.github.io/Canva/" />
   <meta property="og:title" content="The 90's Club – Fine Dining Experience" />
   <meta property="og:description" content="Explore our curated menu with immersive 3D and AR previews." />
-  <meta property="og:url" content="https://yashasvidesh03-cmd.github.io/New-website/" />
+  <meta property="og:url" content="https://yashasvidesh03-cmd.github.io/Canva/" />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://yashasvidesh03-cmd.github.io/New-website/image.jpg.jpeg" />
+  <meta property="og:image" content="https://yashasvidesh03-cmd.github.io/Canva/image.jpg.jpeg" />
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://yashasvidesh03-cmd.github.io/New-website/image.jpg.jpeg">
+  <meta name="twitter:image" content="https://yashasvidesh03-cmd.github.io/Canva/image.jpg.jpeg">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -512,21 +512,21 @@
     event.target.classList.add("active");
   }
 
-  // New URLs for each dish, with both glb and usdz
+  // New URLs for each dish, with both glb and usdz from your GitHub repo
   const modelMap = {
     "Truffle Arancini": {
-      glb: "https://raw.githubusercontent.com/yashasvidesh03-cmd/New-website/main/model_1.glb",
-      usdz: "https://raw.githubusercontent.com/yashasvidesh03-cmd/New-website/main/Abandoned__Building__Shop__Old__House.usdz",
+      glb: "https://raw.githubusercontent.com/yashasvidesh03-cmd/Canva/main/model_1.glb",
+      usdz: "https://raw.githubusercontent.com/yashasvidesh03-cmd/Canva/main/Abandoned__Building__Shop__Old__House.usdz",
       title: "Truffle Arancini",
     },
     "Seared Scallops": {
-      glb: "https://raw.githubusercontent.com/yashasvidesh03-cmd/New-website/main/model_2.glb",
-      usdz: "https://raw.githubusercontent.com/yashasvidesh03-cmd/New-website/main/10_Genshin_Impact_Inspired_Sword_3D_Models.usdz",
+      glb: "https://raw.githubusercontent.com/yashasvidesh03-cmd/Canva/main/model_2.glb",
+      usdz: "https://raw.githubusercontent.com/yashasvidesh03-cmd/Canva/main/10_Genshin_Impact_Inspired_Sword_3D_Models.usdz",
       title: "Seared Scallops",
     },
     "Burrata Caprese": {
-      glb: "https://raw.githubusercontent.com/yashasvidesh03-cmd/New-website/main/model_3.glb",
-      usdz: "https://raw.githubusercontent.com/yashasvidesh03-cmd/New-website/main/9_mm.usdz",
+      glb: "https://raw.githubusercontent.com/yashasvidesh03-cmd/Canva/main/model_3.glb",
+      usdz: "https://raw.githubusercontent.com/yashasvidesh03-cmd/Canva/main/9_mm.usdz",
       title: "Burrata Caprese",
     },
   };
@@ -541,10 +541,9 @@
   }
 
   function open3DViewer(dishName) {
-    const model = modelMapdishName];
+    const model = modelMap[dishName];
     if (!model) return;
-
-    document.getElementById("modelTitle").innerText = model.title + " 3D View";
+      document.getElementById("modelTitle").innerText = model.title + " 3D View";
     document.getElementById("modalOverlay").classList.add("active");
     const viewerContainer = document.getElementById("mainModelViewer").parentNode;
     // Remove old AR/3D embeds if any, then add new
@@ -611,3 +610,5 @@
   
 </body>
 </html>
+
+ 
