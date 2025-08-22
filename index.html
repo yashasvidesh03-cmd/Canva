@@ -93,7 +93,7 @@
                 </div>
                 <p class="dish-description">Crispy risotto balls infused with black truffle, aged parmesan, and herb aioli</p>
                 <div class="card-actions">
-                  <button class="view-3d-btn" onclick="open3DViewer('Truffle Arancini')">VIEW 3D</button>
+                  <button class="view-3d-btn" onclick="launchSceneViewer('Truffle Arancini')">VIEW 3D</button>
                   <span class="popularity-badge">SIGNATURE</span>
                 </div>
               </div>
@@ -108,7 +108,7 @@
                 </div>
                 <p class="dish-description">Pan-seared scallops with cauliflower purée, pancetta crisps, and microgreens</p>
                 <div class="card-actions">
-                  <button class="view-3d-btn" onclick="open3DViewer('Seared Scallops')">VIEW 3D</button>
+                  <button class="view-3d-btn" onclick="launchSceneViewer('Seared Scallops')">VIEW 3D</button>
                 </div>
               </div>
             </div>
@@ -122,7 +122,7 @@
                 </div>
                 <p class="dish-description">Fresh burrata with heirloom tomatoes, basil oil, and aged balsamic reduction</p>
                 <div class="card-actions">
-                  <button class="view-3d-btn" onclick="open3DViewer('Burrata Caprese')">VIEW 3D</button>
+                  <button class="view-3d-btn" onclick="launchSceneViewer('Burrata Caprese')">VIEW 3D</button>
                   <span class="popularity-badge">POPULAR</span>
                 </div>
               </div>
@@ -197,10 +197,6 @@
     </div>
   </div>
 
-  <!-- AR Model Logic -->
-  <div style="display:none;">
-    <model-viewer id="mainModelViewer"></model-viewer>
-  </div>
   <script>
     // Tab switching logic
     function showCategory(category) {
@@ -209,31 +205,53 @@
       document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
       event.target.classList.add("active");
     }
+
     // Model map for AR/3D
     const modelMap = {
       "Truffle Arancini": {
         glb: "https://raw.githubusercontent.com/yashasvidesh03-cmd/Canva/main/model_1.glb",
         usdz: "https://raw.githubusercontent.com/yashasvidesh03-cmd/Canva/main/Abandoned__Building__Shop__Old__House.usdz",
-        title: "Truffle Arancini",
+        title: "Truffle Arancini"
       },
       "Seared Scallops": {
         glb: "https://raw.githubusercontent.com/yashasvidesh03-cmd/Canva/main/model_2.glb",
         usdz: "https://raw.githubusercontent.com/yashasvidesh03-cmd/Canva/main/10_Genshin_Impact_Inspired_Sword_3D_Models.usdz",
-        title: "Seared Scallops",
+        title: "Seared Scallops"
       },
       "Burrata Caprese": {
         glb: "https://raw.githubusercontent.com/yashasvidesh03-cmd/Canva/main/model_3.glb",
         usdz: "https://raw.githubusercontent.com/yashasvidesh03-cmd/Canva/main/9_mm.usdz",
-        title: "Burrata Caprese",
+        title: "Burrata Caprese"
       }
     };
-    // AR logic placeholder; add your model-viewer modal as needed
-    function open3DViewer(dishName) {
-      alert("Interactive AR/3D preview for " + dishName + " would open here using model:\n" +
-        modelMap[dishName]?.glb + "\n(or USDZ for iOS).");
-      // Insert your original modal logic here
+
+    /**
+     * Launches Google Scene Viewer in AR for Android with 3D model
+     * @param {string} dishName
+     */
+    function launchSceneViewer(dishName) {
+      const model = modelMap[dishName];
+      if (!model) return;
+
+      // Google Scene Viewer intent URL for Android with fallback
+      const sceneViewerUrl =
+        `intent://arvr.google.com/scene-viewer/1.0?file=${encodeURIComponent(model.glb)}` +
+        `&mode=ar_preferred` + // Always open in AR mode if device is compatible
+        `&title=${encodeURIComponent(model.title)}` +
+        `#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;` +
+        // Fallback to your site or menu
+        `S.browser_fallback_url=${encodeURIComponent(window.location.href)};end;`;
+
+      // Simple user agent check for Android
+      if (/android/i.test(navigator.userAgent)) {
+        window.location.href = sceneViewerUrl;
+      } else {
+        // For other platforms, fallback to alert or show message/model-viewer
+        alert("Google Scene Viewer AR works on Android devices. For iOS/desktop preview or inquiries, please ask the staff.");
+        // Or you could add logic to show the .usdz in Quick Look for iOS using <a rel="ar"> if needed.
+      }
     }
   </script>
 </body>
-        </html>
-          
+          </html>
+                                               
