@@ -59,7 +59,24 @@
       .section-title { font-size: 1.08rem;}
       .logo-bar { top:10px; right:14px;}
     }
+
+    /* Modal styles */
+    #modelModal {
+      display: none;
+      position: fixed;
+      z-index: 1500;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+      user-select: none;
+      cursor: default;
+    }
   </style>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer/dist/model-viewer.min.js"></script>
 </head>
 <body>
   <div class="logo-bar" id="logoBar">
@@ -197,6 +214,29 @@
     </div>
   </div>
 
+  <!-- Modal for 3D Web Viewer -->
+  <div id="modelModal" style="display:none; position:fixed; z-index:1500; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.9); justify-content:center; align-items:center;">
+    <div style="position:relative; width:90vw; max-width:600px; height:80vh; background:#111; border-radius:8px; padding:12px; box-sizing:border-box;">
+      <button onclick="closeModelModal()" style="position:absolute; top:10px; right:10px; background:none; border:none; color:#d4af37; font-size:1.5rem; cursor:pointer;">×</button>
+      <model-viewer id="webModelViewer"
+        style="width:100%; height:100%;"
+        src=""
+        alt="3D Model"
+        camera-controls
+        auto-rotate
+        animation-name="all"
+        ar
+        ar-modes="webxr scene-viewer quick-look"
+        environment-image="neutral"
+        shadow-intensity="1">
+      </model-viewer>
+      <button id="arLaunchBtn" style="margin-top:8px; padding:8px 12px; border:none; background:#d4af37; color:#000; font-weight:bold; cursor:pointer; display:none;">
+        View in AR
+      </button>
+    </div>
+  </div>
+
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer/dist/model-viewer.min.js"></script>
   <script>
     // Tab switching logic
     function showCategory(category) {
@@ -225,33 +265,52 @@
       }
     };
 
+    const modelViewer = document.getElementById('webModelViewer');
+    const modelModal = document.getElementById('modelModal');
+    const arLaunchBtn = document.getElementById('arLaunchBtn');
+
     /**
-     * Launches Google Scene Viewer in AR for Android with 3D model
+     * Open modal with 3D model and enable animation + AR launch button
      * @param {string} dishName
      */
     function launchSceneViewer(dishName) {
       const model = modelMap[dishName];
       if (!model) return;
 
-      // Google Scene Viewer intent URL for Android with fallback
-      const sceneViewerUrl =
-        `intent://arvr.google.com/scene-viewer/1.0?file=${encodeURIComponent(model.glb)}` +
-        `&mode=ar_preferred` + // Always open in AR mode if device is compatible
-        `&title=${encodeURIComponent(model.title)}` +
-        `#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;` +
-        // Fallback to your site or menu
-        `S.browser_fallback_url=${encodeURIComponent(window.location.href)};end;`;
+      // Set the 3D model source for web viewer (.glb)
+      modelViewer.src = model.glb;
+      modelViewer.alt = model.title;
 
-      // Simple user agent check for Android
+      // Show the modal with web 3D viewer
+      modelModal.style.display = 'flex';
+
+      // Show the AR launch button only on Android
       if (/android/i.test(navigator.userAgent)) {
-        window.location.href = sceneViewerUrl;
+        arLaunchBtn.style.display = 'inline-block';
+        arLaunchBtn.onclick = () => {
+          // Google Scene Viewer intent URL for Android with fallback
+          const sceneViewerUrl =
+            `intent://arvr.google.com/scene-viewer/1.0?file=${encodeURIComponent(model.glb)}` +
+            `&mode=ar_preferred` +
+            `&title=${encodeURIComponent(model.title)}` +
+            `#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;` +
+            `S.browser_fallback_url=${encodeURIComponent(window.location.href)};end;`;
+          window.location.href = sceneViewerUrl;
+        };
       } else {
-        // For other platforms, fallback to alert or show message/model-viewer
-        alert("Google Scene Viewer AR works on Android devices. For iOS/desktop preview or inquiries, please ask the staff.");
-        // Or you could add logic to show the .usdz in Quick Look for iOS using <a rel="ar"> if needed.
+        arLaunchBtn.style.display = 'none';
       }
+    }
+
+    /**
+     * Close the 3D model modal
+     */
+    function closeModelModal() {
+      modelModal.style.display = 'none';
+      modelViewer.src = '';
     }
   </script>
 </body>
-          </html>
+    </html>
+  
                                                
