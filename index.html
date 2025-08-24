@@ -2,152 +2,187 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>The 90's Club – Fine Dining Experience</title>
-  <meta name="description" content="The 90's Club – Fine dining experience with 3D dish previews and AR menus.">
-  <meta name="keywords" content="fine dining, 3D menu, AR restaurant, The 90's Club, gourmet food, interactive menu">
-  <meta name="robots" content="index,follow">
+  <meta name="description" content="The 90's Club – Fine dining experience with 3D dish previews and AR menus." />
+  <link rel="icon" href="image.jpg.jpeg" />
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer/dist/model-viewer.min.js"></script>
   <style>
-    body {
-      margin: 0; padding: 0;
-      min-height: 100vh;
+    :root {
+      --gold: #d4af37;
+      --gold-dark: #b5942b;
+      --shadow: 0 6px 24px rgba(200,180,80,0.05);
+      --main-bg: linear-gradient(135deg, #fbfbfd 0%, #e8eaff 100%);
+      --modal-bg: rgba(50,41,30,0.10);
+    }
+    html, body {
+      margin:0; padding:0; min-height:100vh;
       font-family: 'Segoe UI', Arial, sans-serif;
-      background: linear-gradient(135deg, #f8f8fc 0%, #e0e7ff 100%);
+      background: var(--main-bg);
       color: #222;
     }
     .logo-bar {
-      display: flex; flex-direction: column; align-items: flex-end;
-      position: fixed; top: 40px; right: 60px; z-index: 2;
+      display: flex; flex-direction: row; align-items: center; justify-content:center;
+      gap: 17px;
+      margin: 40px auto 0 auto;
+      width:100%; max-width: 400px;
     }
     .logo-main {
-      width: 80px; height: 80px; margin-bottom: 10px;
-      background: linear-gradient(135deg,#d4af37 0%,#ffe7ab 100%);
+      width: 76px; height: 76px;
+      background: linear-gradient(135deg,var(--gold) 0%,#ffe7ab 100%);
       border-radius: 50%; display:flex; align-items:center; justify-content:center;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+      box-shadow: var(--shadow);
     }
-    .logo-main img { width: 60px; height: 60px; border-radius: 50%; }
+    .logo-main img { width: 56px; height: 56px; border-radius:50%; object-fit: cover;}
     .main-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size:1.7rem;
-      font-weight:500;
-      letter-spacing:3px;
-      text-align:right;
-      color: #4a4a4a;
+      font-size:2.05rem; font-weight:600; letter-spacing:2px; color:#4a4a4a;
     }
     .subtitle {
-      font-size:0.95rem; color:#d4af37; opacity:0.95; font-weight:400; letter-spacing:4px; text-transform:uppercase;
-      text-align:right;
+      color: var(--gold); font-weight:500; font-size:1.02rem; letter-spacing:2px;
+      text-transform:uppercase; margin-top:8px;
     }
     .container {
-      max-width: 900px;
-      margin: 60px auto 0 auto;
-      padding: 30px 20px 60px 20px;
-      background: #fff6ffe0;
-      border-radius: 18px;
-      box-shadow: 0 8px 32px rgba(180,170,200,0.06);
+      max-width: 960px;
+      margin: 32px auto 32px auto;
+      padding: 28px 30px 50px 30px;
+      background: #fffafbe6;
+      border-radius: 14px;
+      box-shadow: var(--shadow);
     }
-    .section-header { text-align:center; margin-bottom: 28px;}
+    .section-header { text-align:center; margin-bottom: 22px;}
     .section-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size:2.15rem;
-      color:#4a4a4a; margin-bottom:12px;
-      letter-spacing:2px;
-      font-weight: 700;
+      font-size:2.1rem;
+      color:#574512; margin-bottom:10px; font-weight:700;
     }
     .section-subtitle {
-      font-size:1.02rem; color:#b19742; letter-spacing:2px; text-transform:uppercase; font-weight:500;
+      font-size:1rem; color:var(--gold-dark); letter-spacing:2px; text-transform:uppercase; font-weight:500;
     }
-    .category-tabs { display:flex; justify-content:center; margin-bottom:38px; border-bottom:1px solid #e7e0e0;}
+    .category-tabs { display:flex; justify-content:center; margin-bottom:27px;
+      border-bottom:1.5px solid #eeddaf; gap:4px; flex-wrap:wrap;}
     .tab-btn {
       background:none; border:none; color:#a3a3a3;
-      padding:13px 34px; font-size:1.07rem; cursor:pointer;
+      padding:13px 38px 11px 38px; font-size:1.07rem; cursor:pointer;
       text-transform:uppercase; letter-spacing:2px;
-      font-family:inherit; position:relative; transition:.3s; font-weight:600;
+      font-family:inherit; transition:.2s; font-weight:600;
+      border-bottom: 2.5px solid transparent;
     }
-    .tab-btn.active, .tab-btn:hover { color:#4a4a4a; border-bottom:3px solid #d4af37; }
+    .tab-btn.active, .tab-btn:hover { color:#574512; border-bottom:2.5px solid var(--gold);}
     .menu-category { display:none; }
     .menu-category.active { display:block;}
-    .menu-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:26px;}
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(335px, 1fr)); gap: 24px;}
     .menu-card {
-      background:#fffdfbe9; border-radius:14px;
-      box-shadow: 0 4px 16px rgba(200,200,180,0.08);
-      padding: 21px 18px 12px 18px;
-      border:1px solid #efefee;
+      background:#fffdfbe9; border-radius:13px;
+      box-shadow: var(--shadow);
+      padding: 18px 17px 12px 17px;
+      border:1px solid #e9e5dd;
       display:flex; flex-direction:column; align-items: flex-start;
-      justify-content: space-between;
-      min-height:175px;
-      transition: box-shadow .2s;
+      min-height:170px;
     }
-    .menu-card:hover { box-shadow: 0 11px 34px rgba(210,175,60,0.08);}
-    .dish-header { display:flex; justify-content:space-between; align-items:center; width:100%; gap:12px;}
-    .dish-name { font-family: 'Cormorant Garamond', serif; font-size:1.23rem; font-weight:600; color:#5e4e2e;}
-    .dish-price { color:#b29118;font-size:1.08rem; font-weight:700;}
-    .dish-description { color:#555; font-size:0.95rem; margin:10px 0 0px 0;}
+    .menu-card:hover { box-shadow: 0 10px 30px rgba(210,175,60,0.10);}
+    .dish-header { display:flex; justify-content:space-between; align-items:flex-end; width:100%; gap:10px;}
+    .dish-name { font-family:'Cormorant Garamond',serif; font-size:1.18rem; font-weight:600; color:#2d200c;}
+    .dish-price { color:var(--gold-dark);font-size:1.09rem; font-weight:600;}
+    .dish-description { color:#5b5b5b; font-size:1.01rem; margin:8px 0 0 0;}
     .card-actions { display:flex;align-items:center;gap:18px; margin-top:10px;}
-    .view-3d-btn { background:transparent; border:1px solid #d4af37; border-radius:4px; padding:7px 16px; color:#d4af37; letter-spacing:1px; cursor:pointer; font-weight:600;}
-    .view-3d-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-    .popularity-badge { color:#d4af37;font-size:0.80rem;text-transform:uppercase; margin-left:4px;}
-
-    /* Modals */
-    .modal-bg {
-      display: none;
-      position: fixed; z-index: 10000;
-      left:0; top:0; width:100vw; height:100vh;
-      background: rgba(40,37,66,0.12);
-      justify-content: center; align-items: center;
+    .view-3d-btn {
+      background:transparent; border:1.7px solid var(--gold); border-radius:5px; padding:7px 15px; color:var(--gold); letter-spacing:1px; cursor:pointer; font-weight:600; font-size:1rem;
     }
-    .modal-bg.active { display:flex; }
-    .modal {
+    .view-3d-btn:disabled { opacity:0.44; cursor:not-allowed;}
+    .popularity-badge { color:var(--gold-dark); font-size:0.81rem;text-transform:uppercase; margin-left:7px; font-weight:700;}
+    .info-bar {
+      margin:27px auto 18px auto;
+      background:#faf5da;
+      padding:13px; border-radius: 9px;
+      font-size:1.11rem; color:#bca542; max-width:390px; text-align:center; box-shadow:0 0 9px #fffbe2;
+      letter-spacing:1.4px;
+    }
+    .action-bar {
+      text-align:center; margin:0 auto 30px auto;
+    }
+    .action-bar button {
+      margin: 4px 11px; font-size:1.04rem; background-color:var(--gold);
+      color: #222; border: none; border-radius:6px;
+      font-weight: 600; padding: 11px 20px;
+      cursor: pointer; letter-spacing:1px; transition:.15s;
+      box-shadow:0 3px 10px #eedcbe36;
+    }
+    .action-bar button:hover {
+      background: var(--gold-dark);
+      color:#fff;
+    }
+    .modal-bg, .ar-modal-bg {
+      display:none; position:fixed; z-index:10000; left:0; top:0; width:100vw; height:100vh;
+      background: var(--modal-bg); justify-content:center; align-items:center; transition:.25s;
+    }
+    .modal-bg.active, .ar-modal-bg.active { display:flex;}
+    .modal, .ar-modal-box {
       background: #fff;
       border-radius: 15px;
-      padding: 36px 34px 27px 34px;
-      min-width:320px; width:100%; max-width: 380px;
-      box-shadow: 0 10px 32px rgba(180,170,200,0.12);
+      padding: 28px 22px 21px 22px;
+      min-width:310px; width:100%; max-width:350px;
+      box-shadow: 0 10px 35px rgba(180,170,200,0.18);
       position:relative;
     }
-    .modal-title { font-size:1.4rem; font-weight:700; letter-spacing:2px; color:#4a4a4a; margin-bottom:15px;}
-    .close-btn {
-      position:absolute; right:14px; top:12px; background:none; border:none;
-      font-size:1.7rem; color:#888; cursor:pointer;
+    .ar-modal-box {min-width:340px;max-width:440px;padding:22px 19px 14px 19px;display:flex;flex-direction:column;align-items:center;}
+    .ar-close-btn, .close-btn {
+      position:absolute; right:11px; top:8px;
+      background:none; border:none; font-size:1.6rem; color:#bbb; cursor:pointer;
     }
+    #arModelTitle { font-size:1.1rem; color:#73601d; margin-bottom:7px; }
+    #arViewBtn {
+      margin-top:12px; background: var(--gold); border-radius:6px;
+      color: #222; font-weight:600; padding: 10px 21px; border:none; cursor:pointer;
+      transition:0.13s; font-size:1.08rem;
+    }
+    #arViewBtn:hover { background:var(--gold-dark); color:#fff;}
+    model-viewer { width: 100%; max-width: 370px; height: 330px; background: #fffbe3; border-radius: 10px;}
+    .modal-title { font-size:1.37rem; font-weight:700; color:#4a4a4a; margin-bottom:18px;}
     .modal label { font-weight:600; margin-top:8px; display:block; margin-bottom:6px;}
     .modal input[type="text"], .modal input[type="email"], .modal input[type="password"] {
-      width:100%; padding:7px 9px; border-radius:7px; margin-bottom:12px; border:1px solid #ddd; font-size:1rem;
+      width:99%; padding:7.5px 9px; border-radius:7px;
+      margin-bottom:14px; border:1px solid #ddd; font-size:1rem; background:#f8f6f1;
     }
     .modal button {
       margin-top:10px;
       padding:12px 13px; width:100%;
-      background-color:#d4af37; border:none; border-radius:6px;
-      color:#333; font-weight:700; font-size:1rem; cursor:pointer;
+      background-color:var(--gold); border:none; border-radius:6px;
+      color:#222; font-weight:700; font-size:1rem; cursor:pointer;
+      box-shadow:0 3px 15px #eedcbe23;
+      transition:.15s;
     }
-    .modal button:hover { background-color:#b5942b;}
-    .info-bar {
-      margin:28px auto 11px auto;
-      background:#f6f2db;
-      padding:16px; border-radius: 9px;
-      font-size:1.1rem; color:#97820e; max-width:340px; text-align:center; box-shadow:0 0 8px #fffbe2;
+    .modal button:hover { background-color:var(--gold-dark); color:#fff;}
+    @media (max-width: 700px) {
+      .container { padding: 15px 4vw; }
+      .menu-grid { grid-template-columns:1fr; }
+      .logo-bar { flex-direction:column; gap:7px; margin-top:17px;}
+      .main-title { font-size:1.39rem;}
     }
-    @media (max-width: 600px) {
-      .container { padding: 15px 2vw; }
-      .section-title { font-size: 1.2rem;}
-      .logo-bar { top:10px; right:10px;}
-      .menu-grid { grid-template-columns:1fr;}
+    @media (max-width: 390px) {
+      .logo-main { width:43px; height:43px; }
+      .logo-main img { width:31px; height:31px;}
+      .section-title { font-size:0.95rem;}
+      .main-title { font-size:0.84rem;}
+      .modal, .ar-modal-box { padding:7px 4px; min-width:88vw;}
+      model-viewer { height:45vw; }
     }
   </style>
 </head>
 <body>
-  <div class="logo-bar" id="logoBar">
+  <div class="logo-bar">
     <div class="logo-main">
       <img src="image.jpg.jpeg" alt="The 90's Club Logo" />
     </div>
-    <h1 class="main-title">The 90's Club</h1>
-    <p class="subtitle">Fine Dining Experience</p>
+    <div style="display:flex; flex-direction:column;">
+      <span class="main-title">The 90's Club</span>
+      <span class="subtitle">Fine Dining Experience</span>
+    </div>
   </div>
-
   <div class="container">
     <div class="section-header">
       <h2 class="section-title">Menu</h2>
-      <p class="section-subtitle">Curated Selection</p>
+      <div class="section-subtitle">Curated Selection</div>
     </div>
     <div class="category-tabs">
       <button class="tab-btn active" onclick="showCategory('appetizers')">Appetizers</button>
@@ -163,7 +198,7 @@
           </div>
           <div class="dish-description">Crispy risotto balls infused with black truffle, aged parmesan, and herb aioli</div>
           <div class="card-actions">
-            <button class="view-3d-btn" onclick="launchSceneViewer('Truffle Arancini')">VIEW 3D</button>
+            <button class="view-3d-btn" onclick="openARModal('Truffle Arancini')">VIEW 3D</button>
             <span class="popularity-badge">SIGNATURE</span>
           </div>
         </div>
@@ -174,7 +209,7 @@
           </div>
           <div class="dish-description">Pan-seared scallops with cauliflower purée, pancetta crisps, and microgreens</div>
           <div class="card-actions">
-            <button class="view-3d-btn" onclick="launchSceneViewer('Seared Scallops')">VIEW 3D</button>
+            <button class="view-3d-btn" onclick="openARModal('Seared Scallops')">VIEW 3D</button>
           </div>
         </div>
         <div class="menu-card">
@@ -184,7 +219,7 @@
           </div>
           <div class="dish-description">Fresh burrata with heirloom tomatoes, basil oil, and aged balsamic reduction</div>
           <div class="card-actions">
-            <button class="view-3d-btn" onclick="launchSceneViewer('Burrata Caprese')">VIEW 3D</button>
+            <button class="view-3d-btn" onclick="openARModal('Burrata Caprese')">VIEW 3D</button>
             <span class="popularity-badge">POPULAR</span>
           </div>
         </div>
@@ -238,17 +273,16 @@
         </div>
       </div>
     </div>
-
-    <!-- User actions - Info bar and Buttons -->
-    <div class="info-bar" id="infoDisplay">Welcome to The 90's Club! Sign in, register, or explore our menu.</div>
-    <div style="text-align:center;">
+    <div class="info-bar" id="infoDisplay">
+      Welcome to The 90's Club! Sign in, register, or explore our menu.
+    </div>
+    <div class="action-bar">
       <button onclick="openModal('loginModal')">Sign In</button>
       <button onclick="openModal('registerModal')">Register</button>
       <button onclick="showLocation()">Show Shop Location</button>
       <button onclick="showContact()">Show Contact Info</button>
     </div>
   </div>
-
   <!-- Login Modal -->
   <div class="modal-bg" id="loginModalBg">
     <div class="modal">
@@ -261,7 +295,6 @@
       <button onclick="loginUser()">Login</button>
     </div>
   </div>
-
   <!-- Register Modal -->
   <div class="modal-bg" id="registerModalBg">
     <div class="modal">
@@ -276,25 +309,32 @@
       <button onclick="registerUser()">Register</button>
     </div>
   </div>
-
+  <!-- AR Modal -->
+  <div class="ar-modal-bg" id="arModalBg">
+    <div class="ar-modal-box">
+      <button class="ar-close-btn" onclick="closeARModal()">&times;</button>
+      <div id="arModelTitle"></div>
+      <model-viewer id="arModelViewer" camera-controls auto-rotate shadow-intensity="1"
+        ar
+        alt="3D Dish Model"
+        autoplay
+        style="background:#fffbe3;">
+      </model-viewer>
+      <button id="arViewBtn" style="display: none;">View in AR</button>
+    </div>
+  </div>
   <script>
-    // Show/hide modals
-    function openModal(type) {
-      document.getElementById(type + 'Bg').classList.add('active');
-    }
-    function closeModal(type) {
-      document.getElementById(type + 'Bg').classList.remove('active');
-    }
-
-    // Tabs logic
+    // Tabs
     function showCategory(category) {
-      document.querySelectorAll(".menu-category").forEach(c => c.classList.remove("active"));
+      document.querySelectorAll(".menu-category").forEach(c=>c.classList.remove("active"));
       document.getElementById(category).classList.add("active");
-      document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+      document.querySelectorAll(".tab-btn").forEach(btn=>btn.classList.remove("active"));
       event.target.classList.add("active");
     }
-
-    // 3D AR Model map (unchanged)
+    // Modal logic
+    function openModal(type) { document.getElementById(type+'Bg').classList.add('active'); }
+    function closeModal(type){ document.getElementById(type+'Bg').classList.remove('active'); }
+    // AR Modal logic
     const modelMap = {
       "Truffle Arancini": {
         glb: "https://raw.githubusercontent.com/yashasvidesh03-cmd/Canva/main/model_1.glb",
@@ -312,61 +352,63 @@
         title: "Burrata Caprese"
       }
     };
-
-    // Launch Model in AR
-    function launchSceneViewer(dishName) {
+    function openARModal(dishName) {
       const model = modelMap[dishName];
       if (!model) return;
-      const sceneViewerUrl =
-        `intent://arvr.google.com/scene-viewer/1.0?file=${encodeURIComponent(model.glb)}&mode=ar_preferred&title=${encodeURIComponent(model.title)}#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;S.browser_fallback_url=${encodeURIComponent(window.location.href)};end;`;
+      document.getElementById('arModelTitle').innerText = model.title;
+      const mv = document.getElementById('arModelViewer');
+      mv.src = model.glb;
+      mv.setAttribute('ios-src', model.usdz);
+      document.getElementById('arModalBg').classList.add('active');
+      // For Android users, show the AR launch button
+      const arBtn = document.getElementById('arViewBtn');
       if (/android/i.test(navigator.userAgent)) {
-        window.location.href = sceneViewerUrl;
+        arBtn.style.display = 'block';
+        arBtn.onclick = function() {
+          const url = `intent://arvr.google.com/scene-viewer/1.0?file=${encodeURIComponent(model.glb)}&mode=ar_preferred&title=${encodeURIComponent(model.title)}#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;S.browser_fallback_url=${encodeURIComponent(window.location.href)};end;`;
+          window.location.href = url;
+        };
       } else {
-        alert("Google Scene Viewer AR works on Android devices. For iOS/desktop preview or inquiries, please ask the staff.");
+        arBtn.style.display = 'none';
       }
     }
-
-    // API base
+    function closeARModal() {
+      document.getElementById('arModalBg').classList.remove('active');
+      document.getElementById('arModelViewer').src = '';
+    }
+    // -- API base & user flows --
     const apiBase = 'http://localhost:5000/api';
-
-    // Login
     async function loginUser() {
       const email = document.getElementById('loginEmail').value;
       const password = document.getElementById('loginPassword').value;
       const res = await fetch(`${apiBase}/login`, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({email, password})
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({email,password})
       });
       const data = await res.json();
       document.getElementById('infoDisplay').innerText = data.message || data.error;
       closeModal('loginModal');
     }
-
-    // Register
     async function registerUser() {
       const username = document.getElementById('regUsername').value;
       const email = document.getElementById('regEmail').value;
       const password = document.getElementById('regPassword').value;
       const res = await fetch(`${apiBase}/register`, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({username, email, password})
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({username,email,password})
       });
       const data = await res.json();
       document.getElementById('infoDisplay').innerText = data.message || data.error;
       closeModal('registerModal');
     }
-
-    // Shop location info
     async function showLocation() {
       const res = await fetch(`${apiBase}/location`);
       const data = await res.json();
       document.getElementById('infoDisplay').innerText =
         `Address: ${data.address}\nLatitude: ${data.latitude}\nLongitude: ${data.longitude}`;
     }
-
-    // Contact info
     async function showContact() {
       const res = await fetch(`${apiBase}/contact`);
       const data = await res.json();
@@ -375,5 +417,5 @@
     }
   </script>
 </body>
-  </html>
-      
+              </html>
+            
