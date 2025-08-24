@@ -2,247 +2,378 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>The 90's Club – Fine Dining Experience</title>
+  <meta name="description" content="The 90's Club – Fine dining experience with 3D dish previews and AR menus.">
+  <meta name="keywords" content="fine dining, 3D menu, AR restaurant, The 90's Club, gourmet food, interactive menu">
+  <meta name="robots" content="index,follow">
   <style>
-    /* Background and typography */
     body {
       margin: 0; padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-      color: #333;
+      min-height: 100vh;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #f8f8fc 0%, #e0e7ff 100%);
+      color: #222;
+    }
+    .logo-bar {
+      display: flex; flex-direction: column; align-items: flex-end;
+      position: fixed; top: 40px; right: 60px; z-index: 2;
+    }
+    .logo-main {
+      width: 80px; height: 80px; margin-bottom: 10px;
+      background: linear-gradient(135deg,#d4af37 0%,#ffe7ab 100%);
+      border-radius: 50%; display:flex; align-items:center; justify-content:center;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    }
+    .logo-main img { width: 60px; height: 60px; border-radius: 50%; }
+    .main-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size:1.7rem;
+      font-weight:500;
+      letter-spacing:3px;
+      text-align:right;
+      color: #4a4a4a;
+    }
+    .subtitle {
+      font-size:0.95rem; color:#d4af37; opacity:0.95; font-weight:400; letter-spacing:4px; text-transform:uppercase;
+      text-align:right;
     }
     .container {
       max-width: 900px;
-      margin: 40px auto;
-      background: #ffffffcc;
-      border-radius: 16px;
-      padding: 30px 40px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      margin: 60px auto 0 auto;
+      padding: 30px 20px 60px 20px;
+      background: #fff6ffe0;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(180,170,200,0.06);
     }
-    header {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-    h1 {
+    .section-header { text-align:center; margin-bottom: 28px;}
+    .section-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 2.5rem;
-      font-weight: 600;
-      letter-spacing: 4px;
-      color: #4a4a4a;
-    }
-    p.subtitle {
-      color: #8a8a8a;
-      letter-spacing: 3px;
-      font-weight: 600;
-      margin-top: 4px;
-    }
-    /* Menu item styles */
-    .menu-section {
-      margin-bottom: 50px;
-    }
-    .menu-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.8rem;
-      margin-bottom: 20px;
-      border-bottom: 2px solid #d4af37;
-      padding-bottom: 8px;
-      color: #5a5a5a;
-    }
-    .menu-item {
-      display: flex;
-      justify-content: space-between;
-      padding: 12px 0;
-      border-bottom: 1px solid #eee;
-    }
-    .menu-item:last-child {
-      border-bottom: none;
-    }
-    .dish-name {
-      font-weight: 600;
-    }
-    .dish-description {
-      color: #666;
-      font-size: 0.9rem;
-      margin-top: 4px;
-      max-width: 60%;
-    }
-    .dish-price {
+      font-size:2.15rem;
+      color:#4a4a4a; margin-bottom:12px;
+      letter-spacing:2px;
       font-weight: 700;
-      color: #d4af37;
     }
-    /* Forms and buttons */
-    form {
-      max-width: 400px;
-      margin: 0 auto 40px;
-      padding: 20px;
-      background: #fafafa;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    .section-subtitle {
+      font-size:1.02rem; color:#b19742; letter-spacing:2px; text-transform:uppercase; font-weight:500;
     }
-    label {
-      display: block;
-      margin-bottom: 6px;
-      font-weight: 600;
+    .category-tabs { display:flex; justify-content:center; margin-bottom:38px; border-bottom:1px solid #e7e0e0;}
+    .tab-btn {
+      background:none; border:none; color:#a3a3a3;
+      padding:13px 34px; font-size:1.07rem; cursor:pointer;
+      text-transform:uppercase; letter-spacing:2px;
+      font-family:inherit; position:relative; transition:.3s; font-weight:600;
     }
-    input[type="text"], input[type="email"], input[type="password"] {
-      width: 100%;
-      padding: 10px 12px;
-      margin-bottom: 18px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 1rem;
-      box-sizing: border-box;
+    .tab-btn.active, .tab-btn:hover { color:#4a4a4a; border-bottom:3px solid #d4af37; }
+    .menu-category { display:none; }
+    .menu-category.active { display:block;}
+    .menu-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:26px;}
+    .menu-card {
+      background:#fffdfbe9; border-radius:14px;
+      box-shadow: 0 4px 16px rgba(200,200,180,0.08);
+      padding: 21px 18px 12px 18px;
+      border:1px solid #efefee;
+      display:flex; flex-direction:column; align-items: flex-start;
+      justify-content: space-between;
+      min-height:175px;
+      transition: box-shadow .2s;
     }
-    button {
-      background-color: #d4af37;
-      color: #333;
-      border: none;
-      padding: 12px 24px;
-      font-weight: bold;
-      cursor: pointer;
-      border-radius: 8px;
-      transition: background-color 0.3s ease;
-      width: 100%;
-      font-size: 1rem;
+    .menu-card:hover { box-shadow: 0 11px 34px rgba(210,175,60,0.08);}
+    .dish-header { display:flex; justify-content:space-between; align-items:center; width:100%; gap:12px;}
+    .dish-name { font-family: 'Cormorant Garamond', serif; font-size:1.23rem; font-weight:600; color:#5e4e2e;}
+    .dish-price { color:#b29118;font-size:1.08rem; font-weight:700;}
+    .dish-description { color:#555; font-size:0.95rem; margin:10px 0 0px 0;}
+    .card-actions { display:flex;align-items:center;gap:18px; margin-top:10px;}
+    .view-3d-btn { background:transparent; border:1px solid #d4af37; border-radius:4px; padding:7px 16px; color:#d4af37; letter-spacing:1px; cursor:pointer; font-weight:600;}
+    .view-3d-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .popularity-badge { color:#d4af37;font-size:0.80rem;text-transform:uppercase; margin-left:4px;}
+
+    /* Modals */
+    .modal-bg {
+      display: none;
+      position: fixed; z-index: 10000;
+      left:0; top:0; width:100vw; height:100vh;
+      background: rgba(40,37,66,0.12);
+      justify-content: center; align-items: center;
     }
-    button:hover {
-      background-color: #b5942b;
+    .modal-bg.active { display:flex; }
+    .modal {
+      background: #fff;
+      border-radius: 15px;
+      padding: 36px 34px 27px 34px;
+      min-width:320px; width:100%; max-width: 380px;
+      box-shadow: 0 10px 32px rgba(180,170,200,0.12);
+      position:relative;
     }
-    /* Info display */
-    #infoDisplay {
-      max-width: 400px;
-      margin: 0 auto 40px;
-      background: #fafafa;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      font-size: 1rem;
-      color: #444;
-      white-space: pre-wrap;
+    .modal-title { font-size:1.4rem; font-weight:700; letter-spacing:2px; color:#4a4a4a; margin-bottom:15px;}
+    .close-btn {
+      position:absolute; right:14px; top:12px; background:none; border:none;
+      font-size:1.7rem; color:#888; cursor:pointer;
+    }
+    .modal label { font-weight:600; margin-top:8px; display:block; margin-bottom:6px;}
+    .modal input[type="text"], .modal input[type="email"], .modal input[type="password"] {
+      width:100%; padding:7px 9px; border-radius:7px; margin-bottom:12px; border:1px solid #ddd; font-size:1rem;
+    }
+    .modal button {
+      margin-top:10px;
+      padding:12px 13px; width:100%;
+      background-color:#d4af37; border:none; border-radius:6px;
+      color:#333; font-weight:700; font-size:1rem; cursor:pointer;
+    }
+    .modal button:hover { background-color:#b5942b;}
+    .info-bar {
+      margin:28px auto 11px auto;
+      background:#f6f2db;
+      padding:16px; border-radius: 9px;
+      font-size:1.1rem; color:#97820e; max-width:340px; text-align:center; box-shadow:0 0 8px #fffbe2;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 15px 2vw; }
+      .section-title { font-size: 1.2rem;}
+      .logo-bar { top:10px; right:10px;}
+      .menu-grid { grid-template-columns:1fr;}
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>The 90's Club</h1>
-      <p class="subtitle">Fine Dining Experience</p>
-    </header>
+  <div class="logo-bar" id="logoBar">
+    <div class="logo-main">
+      <img src="image.jpg.jpeg" alt="The 90's Club Logo" />
+    </div>
+    <h1 class="main-title">The 90's Club</h1>
+    <p class="subtitle">Fine Dining Experience</p>
+  </div>
 
-    <!-- Sign-In Form -->
-    <form id="loginForm">
-      <h2>Sign In</h2>
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Menu</h2>
+      <p class="section-subtitle">Curated Selection</p>
+    </div>
+    <div class="category-tabs">
+      <button class="tab-btn active" onclick="showCategory('appetizers')">Appetizers</button>
+      <button class="tab-btn" onclick="showCategory('mains')">Main Courses</button>
+      <button class="tab-btn" onclick="showCategory('desserts')">Desserts</button>
+    </div>
+    <div class="menu-category active" id="appetizers">
+      <div class="menu-grid">
+        <div class="menu-card">
+          <div class="dish-header">
+            <span class="dish-name">Truffle Arancini</span>
+            <span class="dish-price">₹18</span>
+          </div>
+          <div class="dish-description">Crispy risotto balls infused with black truffle, aged parmesan, and herb aioli</div>
+          <div class="card-actions">
+            <button class="view-3d-btn" onclick="launchSceneViewer('Truffle Arancini')">VIEW 3D</button>
+            <span class="popularity-badge">SIGNATURE</span>
+          </div>
+        </div>
+        <div class="menu-card">
+          <div class="dish-header">
+            <span class="dish-name">Seared Scallops</span>
+            <span class="dish-price">₹24</span>
+          </div>
+          <div class="dish-description">Pan-seared scallops with cauliflower purée, pancetta crisps, and microgreens</div>
+          <div class="card-actions">
+            <button class="view-3d-btn" onclick="launchSceneViewer('Seared Scallops')">VIEW 3D</button>
+          </div>
+        </div>
+        <div class="menu-card">
+          <div class="dish-header">
+            <span class="dish-name">Burrata Caprese</span>
+            <span class="dish-price">₹16</span>
+          </div>
+          <div class="dish-description">Fresh burrata with heirloom tomatoes, basil oil, and aged balsamic reduction</div>
+          <div class="card-actions">
+            <button class="view-3d-btn" onclick="launchSceneViewer('Burrata Caprese')">VIEW 3D</button>
+            <span class="popularity-badge">POPULAR</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="menu-category" id="mains">
+      <div class="menu-grid">
+        <div class="menu-card">
+          <div class="dish-header">
+            <span class="dish-name">Rosemary Lamb Chops</span>
+            <span class="dish-price">₹38</span>
+          </div>
+          <div class="dish-description">Grilled lamb chops with rosemary, garlic mashed potatoes, and seasonal vegetables</div>
+          <div class="card-actions">
+            <button class="view-3d-btn" disabled>COMING SOON</button>
+          </div>
+        </div>
+        <div class="menu-card">
+          <div class="dish-header">
+            <span class="dish-name">Miso Glazed Salmon</span>
+            <span class="dish-price">₹32</span>
+          </div>
+          <div class="dish-description">Atlantic salmon fillet glazed with miso, soba noodles, bok choy, and ponzu sauce</div>
+          <div class="card-actions">
+            <button class="view-3d-btn" disabled>COMING SOON</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="menu-category" id="desserts">
+      <div class="menu-grid">
+        <div class="menu-card">
+          <div class="dish-header">
+            <span class="dish-name">Classic Tiramisu</span>
+            <span class="dish-price">₹12</span>
+          </div>
+          <div class="dish-description">Traditional Italian tiramisu with espresso-soaked ladyfingers and mascarpone cream</div>
+          <div class="card-actions">
+            <button class="view-3d-btn" disabled>COMING SOON</button>
+          </div>
+        </div>
+        <div class="menu-card">
+          <div class="dish-header">
+            <span class="dish-name">Chocolate Fondant</span>
+            <span class="dish-price">₹14</span>
+          </div>
+          <div class="dish-description">Warm chocolate cake with a molten center, served with vanilla bean gelato</div>
+          <div class="card-actions">
+            <button class="view-3d-btn" disabled>COMING SOON</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- User actions - Info bar and Buttons -->
+    <div class="info-bar" id="infoDisplay">Welcome to The 90's Club! Sign in, register, or explore our menu.</div>
+    <div style="text-align:center;">
+      <button onclick="openModal('loginModal')">Sign In</button>
+      <button onclick="openModal('registerModal')">Register</button>
+      <button onclick="showLocation()">Show Shop Location</button>
+      <button onclick="showContact()">Show Contact Info</button>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div class="modal-bg" id="loginModalBg">
+    <div class="modal">
+      <button class="close-btn" onclick="closeModal('loginModal')">&times;</button>
+      <div class="modal-title">Sign In</div>
       <label for="loginEmail">Email</label>
       <input type="email" id="loginEmail" placeholder="Email" required />
       <label for="loginPassword">Password</label>
       <input type="password" id="loginPassword" placeholder="Password" required />
-      <button type="submit">Login</button>
-    </form>
+      <button onclick="loginUser()">Login</button>
+    </div>
+  </div>
 
-    <!-- Registration Form -->
-    <form id="registerForm">
-      <h2>Register</h2>
+  <!-- Register Modal -->
+  <div class="modal-bg" id="registerModalBg">
+    <div class="modal">
+      <button class="close-btn" onclick="closeModal('registerModal')">&times;</button>
+      <div class="modal-title">Register</div>
       <label for="regUsername">Username</label>
       <input type="text" id="regUsername" placeholder="Username" required />
       <label for="regEmail">Email</label>
       <input type="email" id="regEmail" placeholder="Email" required />
       <label for="regPassword">Password</label>
       <input type="password" id="regPassword" placeholder="Password" required />
-      <button type="submit">Register</button>
-    </form>
-
-    <!-- Buttons for Location and Contact -->
-    <div style="max-width: 400px; margin: 0 auto 40px; text-align:center;">
-      <button id="locationBtn" style="margin-bottom:12px;">Show Shop Location</button>
-      <button id="contactBtn">Show Contact Info</button>
+      <button onclick="registerUser()">Register</button>
     </div>
-
-    <pre id="infoDisplay"></pre>
-
-    <!-- Static example of menu items -->
-    <section class="menu-section" id="menuAppetizers">
-      <h3 class="menu-title">Appetizers</h3>
-      <!-- Menu items will be inserted here dynamically -->
-    </section>
-
-    <!-- Add other categories similarly if needed -->
-
   </div>
 
   <script>
+    // Show/hide modals
+    function openModal(type) {
+      document.getElementById(type + 'Bg').classList.add('active');
+    }
+    function closeModal(type) {
+      document.getElementById(type + 'Bg').classList.remove('active');
+    }
+
+    // Tabs logic
+    function showCategory(category) {
+      document.querySelectorAll(".menu-category").forEach(c => c.classList.remove("active"));
+      document.getElementById(category).classList.add("active");
+      document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+      event.target.classList.add("active");
+    }
+
+    // 3D AR Model map (unchanged)
+    const modelMap = {
+      "Truffle Arancini": {
+        glb: "https://raw.githubusercontent.com/yashasvidesh03-cmd/Canva/main/model_1.glb",
+        usdz: "https://raw.githubusercontent.com/yashasvidesh03-cmd/Canva/main/Abandoned__Building__Shop__Old__House.usdz",
+        title: "Truffle Arancini"
+      },
+      "Seared Scallops": {
+        glb: "https://raw.githubusercontent.com/yashasvidesh03-cmd/Canva/main/model_2.glb",
+        usdz: "https://raw.githubusercontent.com/yashasvidesh03-cmd/Canva/main/10_Genshin_Impact_Inspired_Sword_3D_Models.usdz",
+        title: "Seared Scallops"
+      },
+      "Burrata Caprese": {
+        glb: "https://raw.githubusercontent.com/yashasvidesh03-cmd/Canva/main/model_3.glb",
+        usdz: "https://raw.githubusercontent.com/yashasvidesh03-cmd/Canva/main/9_mm.usdz",
+        title: "Burrata Caprese"
+      }
+    };
+
+    // Launch Model in AR
+    function launchSceneViewer(dishName) {
+      const model = modelMap[dishName];
+      if (!model) return;
+      const sceneViewerUrl =
+        `intent://arvr.google.com/scene-viewer/1.0?file=${encodeURIComponent(model.glb)}&mode=ar_preferred&title=${encodeURIComponent(model.title)}#Intent;scheme=https;package=com.google.android.googlequicksearchbox;action=android.intent.action.VIEW;S.browser_fallback_url=${encodeURIComponent(window.location.href)};end;`;
+      if (/android/i.test(navigator.userAgent)) {
+        window.location.href = sceneViewerUrl;
+      } else {
+        alert("Google Scene Viewer AR works on Android devices. For iOS/desktop preview or inquiries, please ask the staff.");
+      }
+    }
+
+    // API base
     const apiBase = 'http://localhost:5000/api';
 
-    // Sign in logic
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
+    // Login
+    async function loginUser() {
       const email = document.getElementById('loginEmail').value;
       const password = document.getElementById('loginPassword').value;
-
       const res = await fetch(`${apiBase}/login`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({email, password})
       });
       const data = await res.json();
-      alert(data.message || data.error);
-    });
+      document.getElementById('infoDisplay').innerText = data.message || data.error;
+      closeModal('loginModal');
+    }
 
-    // Registration logic
-    document.getElementById('registerForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
+    // Register
+    async function registerUser() {
       const username = document.getElementById('regUsername').value;
       const email = document.getElementById('regEmail').value;
       const password = document.getElementById('regPassword').value;
-
       const res = await fetch(`${apiBase}/register`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({username, email, password})
       });
       const data = await res.json();
-      alert(data.message || data.error);
-    });
-
-    // Show shop location
-    document.getElementById('locationBtn').addEventListener('click', async () => {
-      const res = await fetch(`${apiBase}/location`);
-      const data = await res.json();
-      document.getElementById('infoDisplay').textContent = 
-        `Address: ${data.address}\nLatitude: ${data.latitude}\nLongitude: ${data.longitude}`;
-    });
-
-    // Show contact info
-    document.getElementById('contactBtn').addEventListener('click', async () => {
-      const res = await fetch(`${apiBase}/contact`);
-      const data = await res.json();
-      document.getElementById('infoDisplay').textContent = 
-        `Phone: ${data.phone}\nEmail: ${data.email}`;
-    });
-
-    // Dynamically load appetizers menu items from API example (optional)
-    async function loadMenuItems() {
-      const res = await fetch(`${apiBase}/menu?category=appetizers`);
-      if (!res.ok) return;
-      const items = await res.json();
-      const container = document.getElementById('menuAppetizers');
-      container.innerHTML = `<h3 class="menu-title">Appetizers</h3>`; // clear old content
-      items.forEach(item => {
-        const div = document.createElement('div');
-        div.className = 'menu-item';
-        div.innerHTML = `
-          <div>
-            <div class="dish-name">${item.name}</div>
-            <div class="dish-description">${item.description}</div>
-          </div>
-          <div class="dish-price">₹${item.price.toFixed(2)}</div>
-        `;
-        container.appendChild(div);
-      });
+      document.getElementById('infoDisplay').innerText = data.message || data.error;
+      closeModal('registerModal');
     }
 
-    loadMenuItems();
+    // Shop location info
+    async function showLocation() {
+      const res = await fetch(`${apiBase}/location`);
+      const data = await res.json();
+      document.getElementById('infoDisplay').innerText =
+        `Address: ${data.address}\nLatitude: ${data.latitude}\nLongitude: ${data.longitude}`;
+    }
+
+    // Contact info
+    async function showContact() {
+      const res = await fetch(`${apiBase}/contact`);
+      const data = await res.json();
+      document.getElementById('infoDisplay').innerText =
+        `Phone: ${data.phone}\nEmail: ${data.email}`;
+    }
   </script>
 </body>
-      </html>
-  
+  </html>
+      
