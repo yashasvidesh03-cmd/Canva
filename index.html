@@ -1,173 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>The 90's Club – Fine Dining Experience</title>
-  <meta name="description" content="The 90's Club – Fine dining experience with 3D dish previews and AR menus." />
-  <link rel="icon" href="image.jpg.jpeg" />
-  <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer/dist/model-viewer.min.js"></script>
-  <style>
-    :root {
-      --gold: #d4af37;
-      --gold-dark: #b5942b;
-      --shadow: 0 6px 24px rgba(200,180,80,0.05);
-      --main-bg: linear-gradient(135deg, #fbfbfd 0%, #e8eaff 100%);
-      --modal-bg: rgba(50,41,30,0.10);
-    }
-    html, body {
-      margin:0; padding:0; min-height:100vh;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: var(--main-bg);
-      color: #222;
-    }
-    .logo-bar {
-      display: flex; flex-direction: row; align-items: center; justify-content:center;
-      gap: 17px;
-      margin: 40px auto 0 auto;
-      width:100%; max-width: 400px;
-    }
-    .logo-main {
-      width: 76px; height: 76px;
-      background: linear-gradient(135deg,var(--gold) 0%,#ffe7ab 100%);
-      border-radius: 50%; display:flex; align-items:center; justify-content:center;
-      box-shadow: var(--shadow);
-    }
-    .logo-main img { width: 56px; height: 56px; border-radius:50%; object-fit: cover;}
-    .main-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size:2.05rem; font-weight:600; letter-spacing:2px; color:#4a4a4a;
-    }
-    .subtitle {
-      color: var(--gold); font-weight:500; font-size:1.02rem; letter-spacing:2px;
-      text-transform:uppercase; margin-top:8px;
-    }
-    .container {
-      max-width: 960px;
-      margin: 32px auto 32px auto;
-      padding: 28px 30px 50px 30px;
-      background: #fffafbe6;
-      border-radius: 14px;
-      box-shadow: var(--shadow);
-    }
-    .section-header { text-align:center; margin-bottom: 22px;}
-    .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size:2.1rem;
-      color:#574512; margin-bottom:10px; font-weight:700;
-    }
-    .section-subtitle {
-      font-size:1rem; color:var(--gold-dark); letter-spacing:2px; text-transform:uppercase; font-weight:500;
-    }
-    .category-tabs { display:flex; justify-content:center; margin-bottom:27px;
-      border-bottom:1.5px solid #eeddaf; gap:4px; flex-wrap:wrap;}
-    .tab-btn {
-      background:none; border:none; color:#a3a3a3;
-      padding:13px 38px 11px 38px; font-size:1.07rem; cursor:pointer;
-      text-transform:uppercase; letter-spacing:2px;
-      font-family:inherit; transition:.2s; font-weight:600;
-      border-bottom: 2.5px solid transparent;
-    }
-    .tab-btn.active, .tab-btn:hover { color:#574512; border-bottom:2.5px solid var(--gold);}
-    .menu-category { display:none; }
-    .menu-category.active { display:block;}
-    .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(335px, 1fr)); gap: 24px;}
-    .menu-card {
-      background:#fffdfbe9; border-radius:13px;
-      box-shadow: var(--shadow);
-      padding: 18px 17px 12px 17px;
-      border:1px solid #e9e5dd;
-      display:flex; flex-direction:column; align-items: flex-start;
-      min-height:170px;
-    }
-    .menu-card:hover { box-shadow: 0 10px 30px rgba(210,175,60,0.10);}
-    .dish-header { display:flex; justify-content:space-between; align-items:flex-end; width:100%; gap:10px;}
-    .dish-name { font-family:'Cormorant Garamond',serif; font-size:1.18rem; font-weight:600; color:#2d200c;}
-    .dish-price { color:var(--gold-dark);font-size:1.09rem; font-weight:600;}
-    .dish-description { color:#5b5b5b; font-size:1.01rem; margin:8px 0 0 0;}
-    .card-actions { display:flex;align-items:center;gap:18px; margin-top:10px;}
-    .view-3d-btn {
-      background:transparent; border:1.7px solid var(--gold); border-radius:5px; padding:7px 15px; color:var(--gold); letter-spacing:1px; cursor:pointer; font-weight:600; font-size:1rem;
-    }
-    .view-3d-btn:disabled { opacity:0.44; cursor:not-allowed;}
-    .popularity-badge { color:var(--gold-dark); font-size:0.81rem;text-transform:uppercase; margin-left:7px; font-weight:700;}
-    .info-bar {
-      margin:27px auto 18px auto;
-      background:#faf5da;
-      padding:13px; border-radius: 9px;
-      font-size:1.11rem; color:#bca542; max-width:390px; text-align:center; box-shadow:0 0 9px #fffbe2;
-      letter-spacing:1.4px;
-    }
-    .action-bar {
-      text-align:center; margin:0 auto 30px auto;
-    }
-    .action-bar button {
-      margin: 4px 11px; font-size:1.04rem; background-color:var(--gold);
-      color: #222; border: none; border-radius:6px;
-      font-weight: 600; padding: 11px 20px;
-      cursor: pointer; letter-spacing:1px; transition:.15s;
-      box-shadow:0 3px 10px #eedcbe36;
-    }
-    .action-bar button:hover {
-      background: var(--gold-dark);
-      color:#fff;
-    }
-    .modal-bg, .ar-modal-bg {
-      display:none; position:fixed; z-index:10000; left:0; top:0; width:100vw; height:100vh;
-      background: var(--modal-bg); justify-content:center; align-items:center; transition:.25s;
-    }
-    .modal-bg.active, .ar-modal-bg.active { display:flex;}
-    .modal, .ar-modal-box {
-      background: #fff;
-      border-radius: 15px;
-      padding: 28px 22px 21px 22px;
-      min-width:310px; width:100%; max-width:350px;
-      box-shadow: 0 10px 35px rgba(180,170,200,0.18);
-      position:relative;
-    }
-    .ar-modal-box {min-width:340px;max-width:440px;padding:22px 19px 14px 19px;display:flex;flex-direction:column;align-items:center;}
-    .ar-close-btn, .close-btn {
-      position:absolute; right:11px; top:8px;
-      background:none; border:none; font-size:1.6rem; color:#bbb; cursor:pointer;
-    }
-    #arModelTitle { font-size:1.1rem; color:#73601d; margin-bottom:7px; }
-    #arViewBtn {
-      margin-top:12px; background: var(--gold); border-radius:6px;
-      color: #222; font-weight:600; padding: 10px 21px; border:none; cursor:pointer;
-      transition:0.13s; font-size:1.08rem;
-    }
-    #arViewBtn:hover { background:var(--gold-dark); color:#fff;}
-    model-viewer { width: 100%; max-width: 370px; height: 330px; background: #fffbe3; border-radius: 10px;}
-    .modal-title { font-size:1.37rem; font-weight:700; color:#4a4a4a; margin-bottom:18px;}
-    .modal label { font-weight:600; margin-top:8px; display:block; margin-bottom:6px;}
-    .modal input[type="text"], .modal input[type="email"], .modal input[type="password"] {
-      width:99%; padding:7.5px 9px; border-radius:7px;
-      margin-bottom:14px; border:1px solid #ddd; font-size:1rem; background:#f8f6f1;
-    }
-    .modal button {
-      margin-top:10px;
-      padding:12px 13px; width:100%;
-      background-color:var(--gold); border:none; border-radius:6px;
-      color:#222; font-weight:700; font-size:1rem; cursor:pointer;
-      box-shadow:0 3px 15px #eedcbe23;
-      transition:.15s;
-    }
-    .modal button:hover { background-color:var(--gold-dark); color:#fff;}
-    @media (max-width: 700px) {
-      .container { padding: 15px 4vw; }
-      .menu-grid { grid-template-columns:1fr; }
-      .logo-bar { flex-direction:column; gap:7px; margin-top:17px;}
-      .main-title { font-size:1.39rem;}
-    }
-    @media (max-width: 390px) {
-      .logo-main { width:43px; height:43px; }
-      .logo-main img { width:31px; height:31px;}
-      .section-title { font-size:0.95rem;}
-      .main-title { font-size:0.84rem;}
-      .modal, .ar-modal-box { padding:7px 4px; min-width:88vw;}
-      model-viewer { height:45vw; }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The 90's Club – Fine Dining Experience</title>
+<meta name="description" content="The 90's Club – Fine dining experience with 3D dish previews and AR menus." />
+<link rel="icon" href="image.jpg.jpeg" />
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer/dist/model-viewer.min.js"></script>
+<style>
+  :root {
+    --gold: #d4af37;
+    --gold-dark: #b5942b;
+    --shadow: 0 6px 24px rgba(200,180,80,0.05);
+    --main-bg: linear-gradient(135deg, #fbfbfd 0%, #e8eaff 100%);
+    --modal-bg: rgba(50,41,30,0.10);
+  }
+  html, body {
+    margin:0; padding:0; min-height:100vh;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--main-bg);
+    color: #222;
+  }
+  .logo-bar {
+    display: flex; flex-direction: row; align-items: center; justify-content:center;
+    gap: 17px;
+    margin: 40px auto 0 auto;
+    width:100%; max-width: 400px;
+  }
+  .logo-main {
+    width: 76px; height: 76px;
+    background: linear-gradient(135deg,var(--gold) 0%,#ffe7ab 100%);
+    border-radius: 50%; display:flex; align-items:center; justify-content:center;
+    box-shadow: var(--shadow);
+  }
+  .logo-main img { width: 56px; height: 56px; border-radius:50%; object-fit: cover;}
+  .main-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size:2.05rem; font-weight:600; letter-spacing:2px; color:#4a4a4a;
+  }
+  .subtitle {
+    color: var(--gold); font-weight:500; font-size:1.02rem; letter-spacing:2px;
+    text-transform:uppercase; margin-top:8px;
+  }
+  .container {
+    max-width: 960px;
+    margin: 32px auto 32px auto;
+    padding: 28px 30px 50px 30px;
+    background: #fffafbe6;
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+  }
+  .section-header { text-align:center; margin-bottom: 22px;}
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size:2.1rem;
+    color:#574512; margin-bottom:10px; font-weight:700;
+  }
+  .section-subtitle {
+    font-size:1rem; color:var(--gold-dark); letter-spacing:2px; text-transform:uppercase; font-weight:500;
+  }
+  .category-tabs { display:flex; justify-content:center; margin-bottom:27px;
+    border-bottom:1.5px solid #eeddaf; gap:4px; flex-wrap:wrap;}
+  .tab-btn {
+    background:none; border:none; color:#a3a3a3;
+    padding:13px 38px 11px 38px; font-size:1.07rem; cursor:pointer;
+    text-transform:uppercase; letter-spacing:2px;
+    font-family:inherit; transition:.2s; font-weight:600;
+    border-bottom: 2.5px solid transparent;
+  }
+  .tab-btn.active, .tab-btn:hover { color:#574512; border-bottom:2.5px solid var(--gold);}
+  .menu-category { display:none; }
+  .menu-category.active { display:block;}
+  .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(335px, 1fr)); gap: 24px;}
+  .menu-card {
+    background:#fffdfbe9; border-radius:13px;
+    box-shadow: var(--shadow);
+    padding: 18px 17px 12px 17px;
+    border:1px solid #e9e5dd;
+    display:flex; flex-direction:column; align-items: flex-start;
+    min-height:170px;
+  }
+  .menu-card:hover { box-shadow: 0 10px 30px rgba(210,175,60,0.10);}
+  .dish-header { display:flex; justify-content:space-between; align-items:flex-end; width:100%; gap:10px;}
+  .dish-name { font-family:'Cormorant Garamond',serif; font-size:1.18rem; font-weight:600; color:#2d200c;}
+  .dish-price { color:var(--gold-dark);font-size:1.09rem; font-weight:600;}
+  .dish-description { color:#5b5b5b; font-size:1.01rem; margin:8px 0 0 0;}
+  .card-actions { display:flex;align-items:center;gap:18px; margin-top:10px;}
+  .view-3d-btn {
+    background:transparent; border:1.7px solid var(--gold); border-radius:5px; padding:7px 15px; color:var(--gold); letter-spacing:1px; cursor:pointer; font-weight:600; font-size:1rem;
+  }
+  .view-3d-btn:disabled { opacity:0.44; cursor:not-allowed;}
+  .popularity-badge { color:var(--gold-dark); font-size:0.81rem;text-transform:uppercase; margin-left:7px; font-weight:700;}
+  .info-bar {
+    margin:27px auto 18px auto;
+    background:#faf5da;
+    padding:13px; border-radius: 9px;
+    font-size:1.11rem; color:#bca542; max-width:390px; text-align:center; box-shadow:0 0 9px #fffbe2;
+    letter-spacing:1.4px;
+  }
+  .action-bar {
+    text-align:center; margin:0 auto 30px auto;
+  }
+  .action-bar button {
+    margin: 4px 11px; font-size:1.04rem; background-color:var(--gold);
+    color: #222; border: none; border-radius:6px;
+    font-weight: 600; padding: 11px 20px;
+    cursor: pointer; letter-spacing:1px; transition:.15s;
+    box-shadow:0 3px 10px #eedcbe36;
+  }
+  .action-bar button:hover {
+    background: var(--gold-dark);
+    color:#fff;
+  }
+  .modal-bg, .ar-modal-bg {
+    display:none; position:fixed; z-index:10000; left:0; top:0; width:100vw; height:100vh;
+    background: var(--modal-bg); justify-content:center; align-items:center; transition:.25s;
+  }
+  .modal-bg.active, .ar-modal-bg.active { display:flex;}
+  .modal, .ar-modal-box {
+    background: #fff;
+    border-radius: 15px;
+    padding: 28px 22px 21px 22px;
+    min-width:310px; width:100%; max-width:350px;
+    box-shadow: 0 10px 35px rgba(180,170,200,0.18);
+    position:relative;
+  }
+  .ar-modal-box {min-width:340px;max-width:440px;padding:22px 19px 14px 19px;display:flex;flex-direction:column;align-items:center;}
+  .ar-close-btn, .close-btn {
+    position:absolute; right:11px; top:8px;
+    background:none; border:none; font-size:1.6rem; color:#bbb; cursor:pointer;
+  }
+  #arModelTitle { font-size:1.1rem; color:#73601d; margin-bottom:7px; }
+  #arViewBtn {
+    margin-top:12px; background: var(--gold); border-radius:6px;
+    color: #222; font-weight:600; padding: 10px 21px; border:none; cursor:pointer;
+    transition:0.13s; font-size:1.08rem;
+  }
+  #arViewBtn:hover { background:var(--gold-dark); color:#fff;}
+  model-viewer { width: 100%; max-width: 370px; height: 330px; background: #fffbe3; border-radius: 10px;}
+  .modal-title { font-size:1.37rem; font-weight:700; color:#4a4a4a; margin-bottom:18px;}
+  .modal label { font-weight:600; margin-top:8px; display:block; margin-bottom:6px;}
+  .modal input[type="text"], .modal input[type="email"], .modal input[type="password"] {
+    width:99%; padding:7.5px 9px; border-radius:7px;
+    margin-bottom:14px; border:1px solid #ddd; font-size:1rem; background:#f8f6f1;
+  }
+  .modal button {
+    margin-top:10px;
+    padding:12px 13px; width:100%;
+    background-color:var(--gold); border:none; border-radius:6px;
+    color:#222; font-weight:700; font-size:1rem; cursor:pointer;
+    box-shadow:0 3px 15px #eedcbe23;
+    transition:.15s;
+  }
+  .modal button:hover { background-color:var(--gold-dark); color:#fff;}
+  @media (max-width: 700px) {
+    .container { padding: 15px 4vw; }
+    .menu-grid { grid-template-columns:1fr; }
+    .logo-bar { flex-direction:column; gap:7px; margin-top:17px;}
+    .main-title { font-size:1.39rem;}
+  }
+  @media (max-width: 390px) {
+    .logo-main { width:43px; height:43px; }
+    .logo-main img { width:31px; height:31px;}
+    .section-title { font-size:0.95rem;}
+    .main-title { font-size:0.84rem;}
+    .modal, .ar-modal-box { padding:7px 4px; min-width:88vw;}
+    model-viewer { height:45vw; }
+  }
+</style>
 </head>
 <body>
   <div class="logo-bar">
@@ -179,16 +179,19 @@
       <span class="subtitle">Fine Dining Experience</span>
     </div>
   </div>
+
   <div class="container">
     <div class="section-header">
       <h2 class="section-title">Menu</h2>
       <div class="section-subtitle">Curated Selection</div>
     </div>
+
     <div class="category-tabs">
       <button class="tab-btn active" onclick="showCategory('appetizers')">Appetizers</button>
       <button class="tab-btn" onclick="showCategory('mains')">Main Courses</button>
       <button class="tab-btn" onclick="showCategory('desserts')">Desserts</button>
     </div>
+
     <div class="menu-category active" id="appetizers">
       <div class="menu-grid">
         <div class="menu-card">
@@ -225,6 +228,7 @@
         </div>
       </div>
     </div>
+
     <div class="menu-category" id="mains">
       <div class="menu-grid">
         <div class="menu-card">
@@ -249,6 +253,7 @@
         </div>
       </div>
     </div>
+
     <div class="menu-category" id="desserts">
       <div class="menu-grid">
         <div class="menu-card">
@@ -273,9 +278,11 @@
         </div>
       </div>
     </div>
+
     <div class="info-bar" id="infoDisplay">
       Welcome to The 90's Club! Sign in, register, or explore our menu.
     </div>
+
     <div class="action-bar">
       <button onclick="openModal('loginModal')">Sign In</button>
       <button onclick="openModal('registerModal')">Register</button>
@@ -283,6 +290,7 @@
       <button onclick="showContact()">Show Contact Info</button>
     </div>
   </div>
+
   <!-- Login Modal -->
   <div class="modal-bg" id="loginModalBg">
     <div class="modal">
@@ -295,6 +303,7 @@
       <button onclick="loginUser()">Login</button>
     </div>
   </div>
+
   <!-- Register Modal -->
   <div class="modal-bg" id="registerModalBg">
     <div class="modal">
@@ -309,6 +318,7 @@
       <button onclick="registerUser()">Register</button>
     </div>
   </div>
+
   <!-- AR Modal -->
   <div class="ar-modal-bg" id="arModalBg">
     <div class="ar-modal-box">
@@ -323,6 +333,7 @@
       <button id="arViewBtn" style="display: none;">View in AR</button>
     </div>
   </div>
+
   <script>
     // Tabs
     function showCategory(category) {
@@ -412,10 +423,27 @@
     async function showContact() {
       const res = await fetch(`${apiBase}/contact`);
       const data = await res.json();
-      document.getElementById('infoDisplay').innerText =
-        `Phone: ${data.phone}\nEmail: ${data.email}`;
+
+      document.getElementById('infoDisplay').innerHTML = `
+        <div style="display:flex; flex-direction: column; align-items: center; gap:10px; font-size: 1.1rem; font-weight: 500;">
+          <div><strong>Contact Us</strong></div>
+          <div>
+            📞 <a href="tel:${data.phone}" style="color:#574512; text-decoration:none;">${data.phone}</a>
+            <button onclick="copyToClipboard('${data.phone}')" title="Copy phone" style="margin-left:8px; cursor:pointer; border:none; background:none; font-size:1.1rem; color:#b5942b;">📋</button>
+          </div>
+          <div>
+            ✉️ <a href="mailto:${data.email}" style="color:#574512; text-decoration:none;">${data.email}</a>
+            <button onclick="copyToClipboard('${data.email}')" title="Copy email" style="margin-left:8px; cursor:pointer; border:none; background:none; font-size:1.1rem; color:#b5942b;">📋</button>
+          </div>
+        </div>
+      `;
+    }
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text)
+        .then(() => alert(`Copied: ${text}`))
+        .catch(() => alert('Failed to copy'));
     }
   </script>
 </body>
-              </html>
-            
+    </html>
+  
